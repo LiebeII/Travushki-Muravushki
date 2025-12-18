@@ -1,17 +1,11 @@
-def format_number(num: int) -> str:
+def format_number(number: int) -> str:
     """
-    Форматирует числа: заменяет тысячные части на k, миллионные на m
+    Форматирует число в удобочитаемый вид с заглавными суффиксами
+    Пример: 1500 -> 1.5K, 2500000 -> 2.5M
     """
-    if num >= 1000000:
-        return f"{num/1000000:.1f}m".replace('.0m', 'm')
-    elif num >= 1000:
-        return f"{num/1000:.1f}k".replace('.0k', 'k')
+    if number >= 1_000_000:
+        return f"{number / 1_000_000:.1f}M"
+    elif number >= 1_000:
+        return f"{number / 1_000:.1f}K"
     else:
-        return str(num)
-
-
-def format_percent(num: float) -> str:
-    """
-    Форматирует проценты
-    """
-    return f"{num:.1f}%"
+        return str(number)

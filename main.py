@@ -15,9 +15,10 @@ def main():
         print("3. Анализировать комбинации символов (все раскладки)")
         print("4. Анализировать конкретный текстовый файл")
         print("5. Показать результаты последнего анализа")
-        print("6. Выход")
+        print("6. Обновить раскладки из папки ready_made_layouts")
+        print("7. Выход")
         
-        choice = input("\nВыберите действие (1-6): ").strip()
+        choice = input("\nВыберите действие (1-7): ").strip()
         
         if choice == '1':
             evaluator.show_all_layouts()
@@ -50,8 +51,12 @@ def main():
                 evaluator.print_combinations_comparison(evaluator.all_layouts_stats)
             else:
                 print("Анализ еще не проводился. Сначала выполните анализ комбинаций.")
-            
+        
         elif choice == '6':
+            evaluator.import_layouts_from_folder()
+            print("Раскладки обновлены из папки ready_made_layouts")
+            
+        elif choice == '7':
             print("Выход из программы.")
             break
             
@@ -60,9 +65,9 @@ def main():
 
 
 if __name__ == "__main__":
-    # Устанавливаем русские шрифты для графиков
+    # Устанавливаем Nerd Fonts для графиков
     try:
-        plt.rcParams['font.family'] = ['DejaVu Sans', 'Arial', 'sans-serif']
+        plt.rcParams['font.family'] = ['DejaVu Sans Mono', 'monospace']
         plt.rcParams['axes.unicode_minus'] = False
     except:
         pass

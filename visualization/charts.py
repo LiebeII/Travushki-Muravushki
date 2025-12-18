@@ -1,295 +1,232 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from typing import Dict, Any
-from .stats_formatter import format_number
+from typing import Dict, List, Any
+import matplotlib
+from visualization.stats_formatter import format_number
+
+# Устанавливаем шрифт Nerd Font
+matplotlib.rcParams['font.family'] = 'DejaVu Sans Mono'
+matplotlib.rcParams['axes.unicode_minus'] = False
 
 
-def visualize_finger_statistics(layouts_stats: Dict[str, Dict[str, Any]], text_file: str = None):
-    '''
-    Визуализация статистики по пальцам
-    '''
-    if not layouts_stats:
-        print("Нет данных для визуализации")
-        return
+def visualize_finger_statistics(layouts_stats: Dict[str, Any], source_file: str):
+    """Визуализация статистики нагрузки на пальцы"""
+    fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+    fig.suptitle(f'Статистика нагрузки на пальцы\n(Источник: {source_file})', fontsize=16, fontweight='bold')
     
-    layouts = list(layouts_stats.keys())
+    layout_names = list(layouts_stats.keys())
     
-    # 1. ПЕРВАЯ ФИГУРА: Нагрузка на пальцы и штрафы
-    fig1 = plt.figure(figsize=(16, 8))
+    # 1. Нагрузка на пальцы (русские названия) - БЕЗ БОЛЬШИХ ПАЛЬЦЕВ
+    ax1 = axes[0, 0]
     
-    if text_file:
-        fig1.suptitle(f'Статистика для файла: {text_file}', fontsize=16, fontweight='bold')
+    # Русские названия пальцев (без больших пальцев)
+    finger_names_ru = {
+        'left_pinky': 'Лев. мизинец',
+        'left_ring': 'Лев. безымянный',
+        'left_middle': 'Лев. средний',
+        'left_index': 'Лев. указательный',
+        'right_index': 'Прав. указательный',
+        'right_middle': 'Прав. средний',
+        'right_ring': 'Прав. безымянный',
+        'right_pinky': 'Прав. мизинец'
+    }
     
-    # 1.1. Нагрузка на пальцы
-    ax1 = plt.subplot(1, 2, 1)
-    finger_names = ['left_pinky', 'left_ring', 'left_middle', 'left_index',
-                   'right_index', 'right_middle', 'right_ring', 'right_pinky']
+    # Порядок пальцев (без больших пальцев)
+    finger_order = ['left_pinky', 'left_ring', 'left_middle', 'left_index',
+                    'right_index', 'right_middle', 'right_ring', 'right_pinky']
     
-    finger_loads = {finger: [] for finger in finger_names}
+    x = np.arange(len(finger_order))
+    width = 0.8 / len(layout_names)
     
-    for layout in layouts:
-        stats = layouts_stats[layout]
-        for finger in finger_names:
-            finger_loads[finger].append(stats['finger_load'].get(finger, 0))
-    
-    x = np.arange(len(layouts))
-    width = 0.1
-    colors = plt.cm.tab10(np.linspace(0, 1, len(finger_names)))
-    
-    # Находим максимальное значение для нормализации текста
-    max_values = []
-    for i in range(len(layouts)):
-        max_val = max(finger_loads[finger][i] for finger in finger_names)
-        max_values.append(max_val)
-    
-    for i, finger in enumerate(finger_names):
-        bars = ax1.bar(x + i*width - (len(finger_names)-1)*width/2, finger_loads[finger], width, 
-                      color=colors[i], label=finger.replace('_', ' ').title())
+    for i, layout_name in enumerate(layout_names):
+        stats = layouts_stats[layout_name]
+        finger_load = stats['finger_load']
         
-        # Добавляем значения на столбцы
-        for bar_idx, bar in enumerate(bars):
-            val = finger_loads[finger][bar_idx]
-            if val > 0:
-                ax1.text(bar.get_x() + bar.get_width()/2., bar.get_height() + max_values[bar_idx]*0.01,
-                        format_number(val), ha='center', va='bottom', fontsize=7, rotation=90)
+        values = [finger_load.get(finger, 0) for finger in finger_order]
+        
+        # Преобразуем значения для отображения
+        display_values = [v / 1000 if v > 1000 else v for v in values]
+        
+        ax1.bar(x + i * width - width * (len(layout_names) - 1) / 2, 
+                display_values, width, label=layout_name)
     
-    ax1.set_xlabel('Раскладки', fontsize=12)
-    ax1.set_ylabel('Количество кликов', fontsize=12)
-    ax1.set_title('Нагрузка на пальцы', fontsize=14, fontweight='bold')
+    ax1.set_xlabel('Пальцы')
+    ax1.set_ylabel('Нагрузка (тыс. нажатий)')
+    ax1.set_title('Нагрузка на пальцы по раскладкам (без больших пальцев)')
     ax1.set_xticks(x)
-    ax1.set_xticklabels(layouts, rotation=45, ha='right')
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
-    ax1.grid(True, alpha=0.3, axis='y')
+    ax1.set_xticklabels([finger_names_ru.get(f, f) for f in finger_order], rotation=45)
+    ax1.legend()
+    ax1.grid(True, alpha=0.3)
     
-    # 1.2. Общий штраф на пальцы
-    ax2 = plt.subplot(1, 2, 2)
-    total_penalties = [layouts_stats[layout]['total_penalty'] for layout in layouts]
+    # 2. Штраф на пальцы по раскладкам
+    ax2 = axes[0, 1]
     
-    bars = ax2.bar(range(len(layouts)), total_penalties, color=plt.cm.Set3(np.linspace(0, 1, len(layouts))))
-    ax2.set_xlabel('Раскладки', fontsize=12)
-    ax2.set_ylabel('Общий штраф', fontsize=12)
-    ax2.set_title('Общий штраф на пальцы', fontsize=14, fontweight='bold')
-    ax2.set_xticks(range(len(layouts)))
-    ax2.set_xticklabels(layouts, rotation=45, ha='right')
-    ax2.grid(True, alpha=0.3, axis='y')
+    # Используем 'finger_penalty' вместо 'dynamic_penalty'
+    penalties = [layouts_stats[name]['finger_penalty'] for name in layout_names]
+    
+    # Сортируем для лучшего отображения
+    sorted_indices = np.argsort(penalties)
+    sorted_names = [layout_names[i] for i in sorted_indices]
+    sorted_penalties = [penalties[i] for i in sorted_indices]
+    
+    colors = ['#2E86AB' if i == 0 else '#A23B72' if i == len(sorted_penalties)-1 else '#F18F01' 
+              for i in range(len(sorted_penalties))]
+    
+    bars = ax2.bar(range(len(sorted_names)), sorted_penalties, color=colors)
+    ax2.set_xlabel('Раскладка')
+    ax2.set_ylabel('Штраф на пальцы')
+    ax2.set_title('Штраф на пальцы (расстояние от домашнего ряда)\n(меньше = лучше)')
+    ax2.set_xticks(range(len(sorted_names)))
+    ax2.set_xticklabels(sorted_names, rotation=45)
+    ax2.grid(True, alpha=0.3)
     
     # Добавляем значения на столбцы
-    for i, bar in enumerate(bars):
+    for bar, penalty in zip(bars, sorted_penalties):
         height = bar.get_height()
-        ax2.text(bar.get_x() + bar.get_width()/2., height + max(total_penalties)*0.01,
-                f'{height:.1f}', ha='center', va='bottom', fontsize=10)
+        ax2.text(bar.get_x() + bar.get_width()/2., height + max(sorted_penalties)*0.01,
+                f'{penalty:.0f}', ha='center', va='bottom')
+    
+    # 3. Баланс между руками
+    ax3 = axes[1, 0]
+    
+    left_percents = [layouts_stats[name]['hand_balance']['left_percent'] for name in layout_names]
+    right_percents = [layouts_stats[name]['hand_balance']['right_percent'] for name in layout_names]
+    
+    x = np.arange(len(layout_names))
+    width = 0.35
+    
+    bars1 = ax3.bar(x - width/2, left_percents, width, label='Левая рука', color='#2E86AB')
+    bars2 = ax3.bar(x + width/2, right_percents, width, label='Правая рука', color='#A23B72')
+    
+    # Добавляем линию идеального баланса (50%)
+    ax3.axhline(y=50, color='green', linestyle='--', alpha=0.5, label='Идеальный баланс')
+    
+    # Закрашиваем область хорошего баланса (45-55%)
+    ax3.axhspan(45, 55, alpha=0.1, color='green')
+    
+    ax3.set_xlabel('Раскладка')
+    ax3.set_ylabel('Процент использования (%)')
+    ax3.set_title('Баланс между руками')
+    ax3.set_xticks(x)
+    ax3.set_xticklabels(layout_names, rotation=45)
+    ax3.legend()
+    ax3.grid(True, alpha=0.3)
+    
+    # Добавляем маркер для хорошего баланса
+    for i, (left, right) in enumerate(zip(left_percents, right_percents)):
+        if 45 <= left <= 55 and 45 <= right <= 55:
+            ax3.text(i, max(left, right) + 2, '✓', ha='center', va='bottom', fontweight='bold', color='green')
+    
+    # 4. Сравнение удобных/неудобных комбинаций
+    ax4 = axes[1, 1]
+    
+    comfort_counts = [layouts_stats[name]['total_comfort'] for name in layout_names]
+    partial_counts = [layouts_stats[name]['total_partial'] for name in layout_names]
+    uncomfortable_counts = [layouts_stats[name]['total_uncomfortable'] for name in layout_names]
+    
+    x = np.arange(len(layout_names))
+    width = 0.25
+    
+    bars1 = ax4.bar(x - width, comfort_counts, width, label='Удобные', color='#2E86AB')
+    bars2 = ax4.bar(x, partial_counts, width, label='Частично удобные', color='#F18F01')
+    bars3 = ax4.bar(x + width, uncomfortable_counts, width, label='Неудобные', color='#A23B72')
+    
+    ax4.set_xlabel('Раскладка')
+    ax4.set_ylabel('Количество комбинаций')
+    ax4.set_title('Распределение комбинаций по удобству')
+    ax4.set_xticks(x)
+    ax4.set_xticklabels(layout_names, rotation=45)
+    ax4.legend()
+    ax4.grid(True, alpha=0.3)
     
     plt.tight_layout()
     plt.show()
+
+
+def visualize_combo_distribution(layouts_stats: Dict[str, Any], source_file: str):
+    """Визуализация распределения комбинаций"""
+    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    fig.suptitle(f'Распределение комбинаций по раскладкам\n(Источник: {source_file})', fontsize=16, fontweight='bold')
     
-    # 2. ВТОРАЯ ФИГУРА: Распределение штрафов между руками
-    num_layouts = len(layouts)
-    cols = min(4, num_layouts)
-    rows = (num_layouts + cols - 1) // cols
+    layout_names = list(layouts_stats.keys())
     
-    fig2 = plt.figure(figsize=(cols * 4, rows * 3.5))
+    # 1. Процентное соотношение комбинаций
+    ax1 = axes[0]
     
-    if text_file:
-        fig2.suptitle(f'Распределение штрафов между руками: {text_file}', 
-                     fontsize=16, fontweight='bold', y=0.98)
+    # Собираем данные
+    comfort_percents = []
+    partial_percents = []
+    uncomfortable_percents = []
     
-    for idx, layout in enumerate(layouts):
-        row = idx // cols
-        col = idx % cols
-        ax = fig2.add_subplot(rows, cols, idx + 1)
-        
-        stats = layouts_stats[layout]['hand_penalties']
-        left_percent = stats.get('left_percent', 0)
-        right_percent = stats.get('right_percent', 0)
-        
-        if left_percent + right_percent > 0:
-            sizes = [left_percent, right_percent]
-            labels = ['Левая', 'Правая']
-            colors_pie = ['lightblue', 'lightcoral']
-            
-            wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors_pie,
-                                              autopct='%1.1f%%', startangle=90,
-                                              textprops={'fontsize': 10})
-            
-            ax.set_title(f'{layout}\nЛевая: {left_percent:.1f}% | Правая: {right_percent:.1f}%', 
-                        fontsize=12, fontweight='bold', pad=20)
-            ax.axis('equal')
-        else:
-            ax.text(0.5, 0.5, 'Нет данных', ha='center', va='center', fontsize=12)
-            ax.set_title(f'{layout}', fontsize=12, fontweight='bold')
-            ax.axis('off')
-    
-    plt.tight_layout()
-    plt.show()
-    
-    # 3. ТРЕТЬЯ ФИГУРА: Одноручные комбинации
-    cols_combos = min(4, num_layouts)
-    rows_combos = (num_layouts + cols_combos - 1) // cols_combos
-    
-    fig3 = plt.figure(figsize=(cols_combos * 4, rows_combos * 3.5))
-    
-    if text_file:
-        fig3.suptitle(f'Одноручные комбинации: {text_file}', 
-                     fontsize=16, fontweight='bold', y=0.98)
-    
-    for idx, layout in enumerate(layouts):
-        row = idx // cols_combos
-        col = idx % cols_combos
-        ax = fig3.add_subplot(rows_combos, cols_combos, idx + 1)
-        
-        stats = layouts_stats[layout]['two_char_analysis']
-        total = stats['one_hand_total']
-        comfortable = stats['comfortable_one_hand']
-        uncomfortable = total - comfortable
+    for layout_name in layout_names:
+        stats = layouts_stats[layout_name]
+        total = stats['total_comfort'] + stats['total_partial'] + stats['total_uncomfortable']
         
         if total > 0:
-            sizes = [comfortable, uncomfortable]
-            labels = ['Удобные', 'Неудобные']
-            colors_pie = ['green', 'lightcoral']
-            
-            wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors_pie,
-                                              autopct='%1.1f%%', startangle=90,
-                                              textprops={'fontsize': 10})
-            
-            ax.set_title(f'{layout}\nВсего: {format_number(total)}', 
-                        fontsize=12, fontweight='bold', pad=20)
-            ax.axis('equal')
-            
-            # Добавляем абсолютные значения в центр
-            center_text = f'Удобные:\n{format_number(comfortable)}\nНеудобные:\n{format_number(uncomfortable)}'
-            ax.text(0, 0, center_text, ha='center', va='center', fontsize=9, fontweight='bold')
+            comfort_percents.append(stats['total_comfort'] / total * 100)
+            partial_percents.append(stats['total_partial'] / total * 100)
+            uncomfortable_percents.append(stats['total_uncomfortable'] / total * 100)
         else:
-            ax.text(0.5, 0.5, 'Нет данных', ha='center', va='center', fontsize=12)
-            ax.set_title(f'{layout}', fontsize=12, fontweight='bold')
-            ax.axis('off')
+            comfort_percents.append(0)
+            partial_percents.append(0)
+            uncomfortable_percents.append(0)
     
-    plt.tight_layout()
-    plt.show()
-
-
-def visualize_combo_distribution(layouts_stats: Dict[str, Dict[str, Any]], text_file: str = None):
-    '''
-    Визуализация распределения комбинаций
-    '''
-    if not layouts_stats:
-        print("Нет данных для визуализации")
-        return
+    x = np.arange(len(layout_names))
+    width = 0.8
     
-    layouts = list(layouts_stats.keys())
+    # Создаем stacked bar chart
+    bars1 = ax1.bar(x, comfort_percents, width, label='Удобные', color='#2E86AB')
+    bars2 = ax1.bar(x, partial_percents, width, bottom=comfort_percents, label='Частично удобные', color='#F18F01')
+    bars3 = ax1.bar(x, uncomfortable_percents, width, 
+                    bottom=[c+p for c,p in zip(comfort_percents, partial_percents)], 
+                    label='Неудобные', color='#A23B72')
     
-    # 1. ПЕРВАЯ ФИГУРА: Распределение по длинам комбинаций
-    fig1 = plt.figure(figsize=(14, 8))
-    
-    if text_file:
-        fig1.suptitle(f'Распределение комбинаций по длинам: {text_file}', 
-                     fontsize=16, fontweight='bold')
-    
-    ax1 = fig1.add_subplot(1, 1, 1)
-    
-    categories = ['Одноручные', 'Удобные', 'Частично удобные']
-    colors = ['lightblue', 'lightgreen', 'lightcoral']
-    
-    for length in [2, 3, 4]:
-        one_hand_values = []
-        comfortable_values = []
-        partially_values = []
-        
-        for layout in layouts:
-            stats = layouts_stats[layout]
-            one_hand_values.append(stats['one_hand'].get(length, 0))
-            comfortable_values.append(stats['comfort_count'].get(length, 0))
-            partially_values.append(stats['partial_count'].get(length, 0))
-        
-        x = np.arange(len(layouts))
-        width = 0.25
-        
-        if length == 2:
-            offset = -width
-            label_suffix = ' (2 символа)'
-        elif length == 3:
-            offset = 0
-            label_suffix = ' (3 символа)'
-        else:
-            offset = width
-            label_suffix = ' (4 символа)'
-        
-        bars1 = ax1.bar(x + offset, one_hand_values, width, label=f'Одноручные{label_suffix}', 
-                       color=colors[0], alpha=0.7)
-        bars2 = ax1.bar(x + offset, comfortable_values, width, label=f'Удобные{label_suffix}', 
-                       color=colors[1], alpha=0.7, bottom=one_hand_values)
-        bars3 = ax1.bar(x + offset, partially_values, width, label=f'Частично{label_suffix}', 
-                       color=colors[2], alpha=0.7, bottom=np.array(one_hand_values) + np.array(comfortable_values))
-        
-        # Добавляем значения на столбцы
-        for bars in [bars1, bars2, bars3]:
-            for bar in bars:
-                height = bar.get_height()
-                if height > 0:
-                    ax1.text(bar.get_x() + bar.get_width()/2., bar.get_y() + height/2,
-                            format_number(height), ha='center', va='center', fontsize=7)
-    
-    ax1.set_xlabel('Раскладки', fontsize=12)
-    ax1.set_ylabel('Количество комбинаций', fontsize=12)
-    ax1.set_title('Распределение комбинаций по длинам', fontsize=14, fontweight='bold')
-    ax1.set_xticks(np.arange(len(layouts)))
-    ax1.set_xticklabels(layouts, rotation=45, ha='right')
-    
-    # Создаем легенду только для уникальных меток
-    handles, labels = ax1.get_legend_handles_labels()
-    unique_labels = []
-    unique_handles = []
-    for handle, label in zip(handles, labels):
-        if label not in unique_labels:
-            unique_labels.append(label)
-            unique_handles.append(handle)
-    
-    ax1.legend(unique_handles, unique_labels, bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
+    ax1.set_xlabel('Раскладка')
+    ax1.set_ylabel('Процент (%)')
+    ax1.set_title('Процентное соотношение комбинаций по удобству')
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(layout_names, rotation=45)
+    ax1.legend()
     ax1.grid(True, alpha=0.3, axis='y')
     
-    plt.tight_layout()
-    plt.show()
+    # 2. Сравнение всех раскладок (удобные, частично удобные, неудобные) - вертикальная гистограмма
+    ax2 = axes[1]
     
-    # 2. ВТОРАЯ ФИГУРА: Процентное соотношение комбинаций
-    num_layouts = len(layouts)
-    cols = min(4, num_layouts)
-    rows = (num_layouts + cols - 1) // cols
+    # Группируем данные для сравнения
+    categories = ['Удобные', 'Частично удобные', 'Неудобные']
+    category_data = {
+        'Удобные': comfort_percents,
+        'Частично удобные': partial_percents,
+        'Неудобные': uncomfortable_percents
+    }
     
-    fig2 = plt.figure(figsize=(cols * 4, rows * 3.5))
+    x = np.arange(len(layout_names))
+    width = 0.25
+    offsets = [-width, 0, width]
     
-    if text_file:
-        fig2.suptitle(f'Процентное соотношение комбинаций: {text_file}', 
-                     fontsize=16, fontweight='bold', y=0.98)
+    colors = ['#2E86AB', '#F18F01', '#A23B72']
     
-    for idx, layout in enumerate(layouts):
-        row = idx // cols
-        col = idx % cols
-        ax = fig2.add_subplot(rows, cols, idx + 1)
+    for i, (category, color) in enumerate(zip(categories, colors)):
+        values = category_data[category]
+        bars = ax2.bar(x + offsets[i], values, width, label=category, color=color, alpha=0.8)
         
-        stats = layouts_stats[layout]
-        total_one_hand = stats['total_one_hand']
-        total_comfort = stats['total_comfort']
-        total_partial = stats['total_partial']
-        
-        if total_one_hand > 0:
-            comfortable_percent = total_comfort / total_one_hand * 100
-            partially_percent = total_partial / total_one_hand * 100
-            uncomfortable_percent = 100 - comfortable_percent - partially_percent
-            
-            sizes = [comfortable_percent, partially_percent, uncomfortable_percent]
-            labels = ['Удобные', 'Частично', 'Неудобные']
-            colors_pie = ['green', 'yellowgreen', 'lightcoral']
-            
-            wedges, texts, autotexts = ax.pie(sizes, labels=labels, colors=colors_pie,
-                                             autopct='%1.1f%%', startangle=90, pctdistance=0.85,
-                                             textprops={'fontsize': 9})
-            
-            ax.set_title(f'{layout}\nВсего: {format_number(total_one_hand)}', 
-                        fontsize=12, fontweight='bold', pad=20)
-            ax.axis('equal')
-        else:
-            ax.text(0.5, 0.5, 'Нет данных', ha='center', va='center', fontsize=12)
-            ax.set_title(f'{layout}', fontsize=12, fontweight='bold')
-            ax.axis('off')
+        # Добавляем значения на столбцы
+        for bar, value in zip(bars, values):
+            height = bar.get_height()
+            if height > 5:  # Добавляем текст только для достаточно высоких столбцов
+                ax2.text(bar.get_x() + bar.get_width()/2., height + 1,
+                        f'{value:.1f}%', ha='center', va='bottom', fontsize=9)
+    
+    ax2.set_xlabel('Раскладка')
+    ax2.set_ylabel('Процент (%)')
+    ax2.set_title('Сравнение раскладок по типам комбинаций')
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(layout_names, rotation=45)
+    ax2.legend()
+    ax2.grid(True, alpha=0.3, axis='y')
+    
+    # Добавляем общую линию для 100%
+    ax2.axhline(y=100, color='gray', linestyle=':', alpha=0.5)
     
     plt.tight_layout()
     plt.show()

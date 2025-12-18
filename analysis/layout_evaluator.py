@@ -4,11 +4,14 @@ from typing import Dict, List, Any
 import numpy as np
 from collections import defaultdict
 import re
+import os
+import glob
 
 from visualization.stats_formatter import format_number
 from visualization.charts import visualize_finger_statistics, visualize_combo_distribution
 from analysis.text_processor import file_to_words_set, detect_language_ratio
-from analysis.combo_analyzer import combos_counter, conditional_combos_counter, combos_dict_to_combos_count_dict, scancode_from_char, key_from_value
+from analysis.combo_analyzer import combos_counter, scancode_from_char, key_from_value
+from analysis.finger_penalty_calculator import FingerPenaltyCalculator
 from layouts.layout_data import LayoutData
 
 
@@ -18,6 +21,7 @@ class LayoutEvaluator:
         self.layouts = self.load_default_layouts()
         self.current_layout = None
         self.data = LayoutData()
+        self.penalty_calculator = FingerPenaltyCalculator()
         self.max_combos_length = 4
         
         # Статистика для всех раскладок
@@ -28,108 +32,130 @@ class LayoutEvaluator:
             'ЙЦУКЕН': 'russian',
             'Скоропись': 'russian',
             'Фонетическая (яВерт)': 'russian',
-            'Вызов': 'russian',
+            'Диктор': 'russian',
             'QWERTY': 'english',
             'Dvorak': 'english',
             'Colemak': 'english',
             'Workman': 'english'
         }
+        
+        # Автоматический импорт раскладок из папки
+        self.import_layouts_from_folder()
+    
+    def import_layouts_from_folder(self):
+        """Автоматически импортирует все .json файлы из папки ready_made_layouts"""
+        folder_path = 'ready_made_layouts'
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+            print(f"Создана папка {folder_path}")
+            return
+        
+        json_files = glob.glob(os.path.join(folder_path, '*.json'))
+        for json_file in json_files:
+            try:
+                layout_name = self.load_custom_layout(json_file)
+                if layout_name:
+                    print(f"Автоматически загружена раскладка: {layout_name}")
+            except Exception as e:
+                print(f"Ошибка при загрузке {json_file}: {e}")
     
     def load_default_layouts(self) -> Dict[str, Any]:
-        """Загружает предустановленные раскладки"""
+        """Загружает предустановленные раскладки (ТОЛЬКО ЦИФРЫ И БУКВЫ)"""
         default_layouts = {}
         
-        # ЙЦУКЕН (стандартная русская)
+        # ЙЦУКЕН (стандартная русская) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['ЙЦУКЕН'] = {
             "name": "ЙЦУКЕН",
             "language": "russian",
             "layout": [
-                ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
                 ["й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ"],
                 ["ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э"],
-                ["я", "ч", "с", "м", "и", "т", "ь", "б", "ю", "."]
+                ["я", "ч", "с", "м", "и", "т", "ь", "б", "ю"]
             ]
         }
         
-        # Скоропись (русская эргономичная)
+        # Скоропись (русская эргономичная) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['Скоропись'] = {
             "name": "Скоропись",
             "language": "russian",
             "layout": [
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
                 ["ц", "у", "а", "о", "в", "п", "р", "л", "д", "ж", "э"],
                 ["й", "к", "е", "н", "г", "ш", "з", "х", "ъ", "ф", "ы"],
-                ["я", "ч", "с", "м", "и", "т", "ь", "б", "ю", "ё"]
+                ["я", "ч", "с", "м", "и", "т", "ь", "б", "ю"]
             ]
         }
         
-        # Фонетическая (яВерт)
+        # Фонетическая (яВерт) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['Фонетическая (яВерт)'] = {
             "name": "Фонетическая (яВерт)",
             "language": "russian",
             "layout": [
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
                 ["я", "в", "е", "р", "т", "ы", "у", "и", "о", "п"],
                 ["а", "с", "д", "ф", "г", "х", "й", "к", "л"],
                 ["з", "ь", "ц", "ж", "б", "н", "м", "ш", "щ", "ч"]
             ]
         }
         
-        # Вызов (альтернативная русская)
-        default_layouts['Вызов'] = {
-            "name": "Вызов",
+        # Диктор (русская эргономичная для диктовки) - ТОЛЬКО ЦИФРЫ И БУКВЫ
+        default_layouts['Диктор'] = {
+            "name": "Диктор",
             "language": "russian",
             "layout": [
-                ["б", "х", "т", "ч", "щ", "ш", "г", "а", "у", "э"],
-                ["в", "н", "д", "р", "й", "ж", "с", "о", "и", "я"],
-                ["к", "п", "м", "л", "ц", "ф", "з", "ъ", "ы", "ю"],
-                ["ь", "е", " ", " ", " ", " ", "↑", "↑", "ё"]
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                ["н", "т", "с", "р", "в", "м", "д", "п", "л", "г", "б", "ь"],
+                ["о", "а", "е", "и", "у", "к", "я", "ы", "з", "ж", "э"],
+                ["й", "ч", "х", "ц", "ф", "ш", "щ", "ю"]
             ]
         }
         
-        # QWERTY (английская)
+        # QWERTY (английская) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['QWERTY'] = {
             "name": "QWERTY",
             "language": "english",
             "layout": [
-                ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
-                ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\"],
-                ["a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'"],
-                ["z", "x", "c", "v", "b", "n", "m", ",", ".", "/"]
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+                ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+                ["z", "x", "c", "v", "b", "n", "m"]
             ]
         }
         
-        # Dvorak (эргономичная английская)
+        # Dvorak (эргономичная английская) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['Dvorak'] = {
             "name": "Dvorak",
             "language": "english",
             "layout": [
-                ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "[", "]"],
-                ["'", ",", ".", "p", "y", "f", "g", "c", "r", "l", "/", "=", "\\"],
-                ["a", "o", "e", "u", "i", "d", "h", "t", "n", "s", "-"],
-                [";", "q", "j", "k", "x", "b", "m", "w", "v", "z"]
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                ["p", "y", "f", "g", "c", "r", "l"],
+                ["a", "o", "e", "u", "i", "d", "h", "t", "n", "s"],
+                ["q", "j", "k", "x", "b", "m", "w", "v", "z"]
             ]
         }
         
-        # Colemak (эргономичная английская)
+        # Colemak (эргономичная английская) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['Colemak'] = {
             "name": "Colemak",
             "language": "english",
             "layout": [
-                ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
-                ["q", "w", "f", "p", "g", "j", "l", "u", "y", ";", "[", "]", "\\"],
-                ["a", "r", "s", "t", "d", "h", "n", "e", "i", "o", "'"],
-                ["z", "x", "c", "v", "b", "k", "m", ",", ".", "/"]
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                ["q", "w", "f", "p", "g", "j", "l", "u", "y"],
+                ["a", "r", "s", "t", "d", "h", "n", "e", "i", "o"],
+                ["z", "x", "c", "v", "b", "k", "m"]
             ]
         }
         
-        # Workman (эргономичная английская)
+        # Workman (эргономичная английская) - ТОЛЬКО ЦИФРЫ И БУКВЫ
         default_layouts['Workman'] = {
             "name": "Workman",
             "language": "english",
             "layout": [
-                ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
-                ["q", "d", "r", "w", "b", "j", "f", "u", "p", ";", "[", "]", "\\"],
-                ["a", "s", "h", "t", "g", "y", "n", "e", "o", "i", "'"],
-                ["z", "x", "m", "c", "v", "k", "l", ",", ".", "/"]
+                ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+                ["q", "d", "r", "w", "b", "j", "f", "u", "p"],
+                ["a", "s", "h", "t", "g", "y", "n", "e", "o", "i"],
+                ["z", "x", "m", "c", "v", "k", "l"]
             ]
         }
         
@@ -142,11 +168,22 @@ class LayoutEvaluator:
         print("ДОСТУПНЫЕ РАСКЛАДКИ")
         print("="*60)
         
-        for name, layout in self.layouts.items():
-            language = self.layout_languages.get(name, 'неизвестен')
-            print(f"\n{name} ({language}):")
-            for row_idx, row in enumerate(layout.get('layout', [])):
-                print(f"  Ряд {row_idx + 1}: {' '.join(row)}")
+        for name in self.layouts.keys():
+            self.standardize_layout_display(name)
+    
+    def standardize_layout_display(self, layout_name: str):
+        """Стандартизирует отображение раскладки (только буквы и цифры)"""
+        if layout_name in self.layouts:
+            layout = self.layouts[layout_name]
+            rows = layout.get('layout', [])
+            
+            print(f"\n{layout_name} ({self.layout_languages.get(layout_name, 'неизвестен')}):")
+            
+            for row_idx, row in enumerate(rows):
+                # Фильтруем только буквы и цифры для отображения
+                filtered_row = [char for char in row if char.isalnum()]
+                if filtered_row:  # Показываем только если есть буквы/цифры
+                    print(f"  Ряд {row_idx + 1}: {' '.join(filtered_row)}")
     
     def load_custom_layout(self, layout_file: str):
         """Загружает кастомную раскладку из JSON файла"""
@@ -154,7 +191,7 @@ class LayoutEvaluator:
             with open(layout_file, 'r', encoding='utf-8') as f:
                 layout_data = json.load(f)
             
-            layout_name = layout_data.get('name', layout_file)
+            layout_name = layout_data.get('name', os.path.basename(layout_file).replace('.json', ''))
             self.layouts[layout_name] = layout_data
             
             # Определяем язык раскладки
@@ -176,39 +213,135 @@ class LayoutEvaluator:
             return None
     
     def create_layout_map_from_data(self, layout_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Создает карту раскладки из данных"""
+        """Создает карту раскладки из данных (только буквы и цифры) с учетом второго слоя через LAlt"""
         layout_map = {}
         
         # Собираем все символы из раскладки
         if 'layout' in layout_data:
             scancodes = [
-                '02', '03', '04', '05', '06', '07', '08', '09', '0A', '0B', '0C',
-                '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '1A',
-                '1E', '1F', '20', '21', '22', '23', '24', '25', '26', '27', '28',
-                '2C', '2D', '2E', '2F', '30', '31', '32', '33', '34', '35', '36',
-                '39'
+                '02', '03', '04', '05', '06', '07', '08', '09', '0A', '0B',  # цифровой ряд
+                '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '1A', '1B',  # верхний ряд
+                '1E', '1F', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29',  # домашний ряд
+                '2C', '2D', '2E', '2F', '30', '31', '32', '33', '34', '35', '36', '37',  # нижний ряд
+                '38'  # LAlt
             ]
             
             scancode_idx = 0
             
             for row in layout_data['layout']:
-                for char in row:
-                    if char.strip() and len(char) == 1:
+                for cell in row:
+                    if cell.strip():
                         if scancode_idx < len(scancodes):
                             scancode = scancodes[scancode_idx]
                             scancode_idx += 1
                             
-                            # Для букв добавляем оба регистра
-                            if char.isalpha():
-                                layout_map[char.lower()] = {'scancode': scancode, 'modifiers': []}
-                                layout_map[char.upper()] = {'scancode': scancode, 'modifiers': ['shift']}
+                            # Обрабатываем клетки с двумя символами через "/"
+                            if '/' in cell:
+                                parts = cell.split('/')
+                                if len(parts) >= 2:
+                                    # Первый символ - основной (без модификаторов)
+                                    primary_char = parts[0].strip()
+                                    # Второй символ - с Alt
+                                    alt_char = parts[1].strip() if len(parts) > 1 else ''
+                                    
+                                    # Добавляем основной символ (если еще не добавлен)
+                                    if primary_char and len(primary_char) == 1:
+                                        self._add_char_to_layout(layout_map, primary_char, scancode, [])
+                                    
+                                    # Добавляем Alt-символ (если еще не добавлен)
+                                    if alt_char and len(alt_char) == 1:
+                                        self._add_char_to_layout(layout_map, alt_char, scancode, ['alt'])
                             else:
-                                layout_map[char] = {'scancode': scancode, 'modifiers': []}
+                                # Одиночный символ
+                                char = cell.strip()
+                                if len(char) == 1:
+                                    self._add_char_to_layout(layout_map, char, scancode, [])
         
         # Добавляем пробел
         layout_map[' '] = {'scancode': '39', 'modifiers': []}
         
         return layout_map
+    
+    def _add_char_to_layout(self, layout_map: Dict[str, Any], char: str, scancode: str, base_modifiers: List[str]) -> None:
+        """Добавляет символ в карту раскладки, выбирая вариант с наименьшим штрафом"""
+        # Вычисляем штраф для этого варианта
+        penalty = self._calculate_penalty_for_scancode(scancode, base_modifiers)
+        
+        # Проверяем, есть ли уже этот символ в карте
+        if char in layout_map:
+            existing_entry = layout_map[char]
+            existing_scancode = existing_entry.get('scancode')
+            existing_modifiers = existing_entry.get('modifiers', [])
+            
+            # Вычисляем штраф для существующего варианта
+            existing_penalty = self._calculate_penalty_for_scancode(existing_scancode, existing_modifiers)
+            
+            # Выбираем вариант с наименьшим штрафом
+            if penalty < existing_penalty:
+                layout_map[char] = {'scancode': scancode, 'modifiers': base_modifiers.copy()}
+                
+                # Также добавляем вариант с Shift, если это буква
+                if char.isalpha() and char.islower():
+                    upper_char = char.upper()
+                    if upper_char not in layout_map or penalty < self._calculate_penalty_for_scancode(
+                        layout_map[upper_char].get('scancode'), layout_map[upper_char].get('modifiers', [])
+                    ):
+                        layout_map[upper_char] = {'scancode': scancode, 'modifiers': base_modifiers + ['shift']}
+                        
+        else:
+            # Добавляем новый символ
+            layout_map[char] = {'scancode': scancode, 'modifiers': base_modifiers.copy()}
+            
+            # Также добавляем вариант с Shift, если это буква
+            if char.isalpha() and char.islower():
+                layout_map[char.upper()] = {'scancode': scancode, 'modifiers': base_modifiers + ['shift']}
+            elif char.isalpha() and char.isupper():
+                layout_map[char.lower()] = {'scancode': scancode, 'modifiers': base_modifiers}
+    
+    def _calculate_penalty_for_scancode(self, scancode: str, modifiers: List[str]) -> float:
+        """Рассчитывает штраф для сканкода с модификаторами"""
+        # Базовая логика расчета штрафа
+        penalty = 0.0
+        
+        if not scancode:
+            return 9999.0  # Большой штраф для невалидного сканкода
+        
+        # Расчет штрафа за модификаторы
+        if 'shift' in modifiers:
+            # Штраф за Shift зависит от пальца
+            finger = self._get_finger_for_scancode_temp(scancode)
+            if finger in ['left_pinky', 'right_pinky']:
+                penalty += 3.0  # Shift penalty
+            else:
+                penalty += 1.5
+        
+        if 'alt' in modifiers:
+            # Небольшой штраф за Alt
+            penalty += 0.5
+        
+        # Штраф за расстояние от домашнего ряда (упрощенный)
+        # Можно добавить более сложную логику при необходимости
+        
+        return penalty
+    
+    def _get_finger_for_scancode_temp(self, scancode: str) -> str:
+        """Вспомогательная функция для определения пальца по сканкоду"""
+        # Временная реализация - можно вынести в отдельный класс
+        key_finger = {
+            'left_pinky': ['02', '10', '1E', '2C', '38'],
+            'left_ring': ['03', '11', '1F', '2D'],
+            'left_middle': ['04', '12', '20', '2E'],
+            'left_index': ['05', '13', '21', '2F', '06', '14', '22', '30'],
+            'right_index': ['07', '15', '23', '31', '08', '16', '24', '32'],
+            'right_middle': ['09', '17', '25', '33'],
+            'right_ring': ['0A', '18', '26', '34'],
+            'right_pinky': ['0B', '19', '27', '35', '0C', '1A', '28', '36', '29', '0D', '1B', '37'],
+        }
+        
+        for finger, scancodes in key_finger.items():
+            if scancode in scancodes:
+                return finger
+        return None
     
     def set_layout(self, layout_name: str):
         """Устанавливает текущую раскладку"""
@@ -311,58 +444,63 @@ class LayoutEvaluator:
                 print(f"  Нет карты для раскладки {layout_name}")
                 continue
             
-            # Анализируем комбинации
-            one_hand_combos, comfort_combos, partial_combos, comfort_scores = conditional_combos_counter(
-                combos, layout_map, self.data, self.max_combos_length
+            # Анализируем комбинации с динамическими штрафами
+            comfort_combos, partial_combos, uncomfortable_combos, dynamic_scores = self.data.calculate_dynamic_penalties(
+                words_set, layout_map
             )
             
             # Преобразуем в формат для статистики
-            one_hand_count, comfort_count, partial_count = combos_dict_to_combos_count_dict(
-                one_hand_combos, comfort_combos, partial_combos
-            )
+            total_comfort = sum(comfort_combos.values())
+            total_partial = sum(partial_combos.values())
+            total_uncomfortable = sum(uncomfortable_combos.values())
+            
+            # Подсчет штрафа на пальцы (расстояние от домашнего ряда)
+            finger_penalty = self.penalty_calculator.calculate_finger_penalty(text, layout_map)
+            
+            # Статистика по пальцам
+            finger_load = self.penalty_calculator.calculate_finger_load(text, layout_map)
+            
+            # Анализ баланса рук
+            hand_balance = self.data.calculate_hand_balance(text, layout_map)
             
             # Анализ двухсимвольных комбинаций
             two_char_analysis = self.data.analyze_two_char_combinations(
                 combos.get(2, {}), layout_map
             )
             
-            # Статистика по пальцам
-            finger_load = self.data.calculate_finger_load(text, layout_map)
-            total_penalty = self.data.calculate_finger_penalties_total(text, layout_map)
-            hand_penalties = self.data.calculate_hand_penalty_distribution(text, layout_map)
-            
-            total_one_hand = sum(one_hand_count.values())
-            total_comfort = sum(comfort_count.values())
-            total_partial = sum(partial_count.values())
-            
             layouts_stats[layout_name] = {
-                'one_hand': one_hand_count,
-                'comfort_count': comfort_count,
-                'partial_count': partial_count,
-                'total_one_hand': total_one_hand,
+                'comfort_combos': comfort_combos,
+                'partial_combos': partial_combos,
+                'uncomfortable_combos': uncomfortable_combos,
                 'total_comfort': total_comfort,
                 'total_partial': total_partial,
+                'total_uncomfortable': total_uncomfortable,
                 'two_char_analysis': two_char_analysis,
                 'finger_load': finger_load,
-                'total_penalty': total_penalty,
-                'hand_penalties': hand_penalties,
-                'avg_comfort_score': np.mean([score for length_scores in comfort_scores.values() for score in length_scores.values()]) if comfort_scores else 0
+                'finger_penalty': finger_penalty,
+                'hand_balance': hand_balance,
+                'avg_dynamic_score': np.mean(list(dynamic_scores.values())) if dynamic_scores else 0
             }
             
-            if total_one_hand > 0:
-                comfort_percent = total_comfort / total_one_hand * 100
-                partial_percent = total_partial / total_one_hand * 100
-                uncomfortable_percent = 100 - comfort_percent - partial_percent
+            total_combinations = total_comfort + total_partial + total_uncomfortable
+            if total_combinations > 0:
+                comfort_percent = total_comfort / total_combinations * 100
+                partial_percent = total_partial / total_combinations * 100
+                uncomfortable_percent = total_uncomfortable / total_combinations * 100
             else:
                 comfort_percent = partial_percent = uncomfortable_percent = 0
             
-            print(f"  Всего одноручных комбинаций: {format_number(total_one_hand)}")
-            print(f"  Удобные: {format_number(total_comfort)}")
-            print(f"  Частично удобные: {format_number(total_partial)}")
-            print(f"  Распределение: {comfort_percent:.1f}% удобных, {partial_percent:.1f}% частично удобных, {uncomfortable_percent:.1f}% неудобных")
-            print(f"  Общий штраф на пальцы: {total_penalty:.1f}")
-            print(f"  Распределение штрафов: {hand_penalties.get('left_percent', 0):.1f}% левая рука, {hand_penalties.get('right_percent', 0):.1f}% правая рука")
-            print(f"  Двухсимвольные комбинации: {format_number(two_char_analysis['one_hand_total'])} одноручных, из них {format_number(two_char_analysis['comfortable_one_hand'])} удобных")
+            print(f"  Всего комбинаций: {format_number(total_combinations)}")
+            print(f"  Удобные: {format_number(total_comfort)} ({comfort_percent:.1f}%)")
+            print(f"  Частично удобные: {format_number(total_partial)} ({partial_percent:.1f}%)")
+            print(f"  Неудобные: {format_number(total_uncomfortable)} ({uncomfortable_percent:.1f}%)")
+            print(f"  Штраф на пальцы: {finger_penalty:.0f}")
+            print(f"  Баланс рук: {hand_balance['left_percent']:.1f}% левая, {hand_balance['right_percent']:.1f}% правая")
+            if hand_balance['is_good']:
+                print(f"  ✓ Хороший баланс рук (в пределах 45-55%)")
+            else:
+                print(f"  ✗ Плохой баланс рук")
+            print(f"  Двухсимвольные комбинации: {format_number(two_char_analysis['one_hand_total'])} одноручных")
         
         # Сохраняем статистику
         self.all_layouts_stats = layouts_stats
@@ -376,169 +514,174 @@ class LayoutEvaluator:
             visualize_combo_distribution(layouts_stats, source_file)
     
     def print_combinations_comparison(self, layouts_stats: Dict[str, Any]):
-        """Выводит сравнение результатов анализа комбинаций с рейтингами"""
-        print("\n" + "="*100)
+        """Выводит сравнение результатов анализа комбинаций с правильными рейтингами"""
+        print("\n" + "="*120)
         print("СРАВНЕНИЕ РАСКЛАДОК ПО КОМБИНАЦИЯМ СИМВОЛОВ")
-        print("="*100)
+        print("="*120)
         
-        # Собираем все критерии для рейтингов
-        criteria_data = {
-            'Удобные комбинации %': [],
-            'Общий штраф': [],
-            'Нагрузка на указательные': [],
-            'Баланс рук': []
-        }
-        
+        # Собираем данные по всем раскладкам
         layout_data = []
+        
         for layout_name, stats in layouts_stats.items():
-            total_one_hand = stats['total_one_hand']
-            total_comfort = stats['total_comfort']
-            total_penalty = stats['total_penalty']
+            total_combinations = stats['total_comfort'] + stats['total_partial'] + stats['total_uncomfortable']
+            finger_penalty = stats['finger_penalty']
             
-            if total_one_hand > 0:
-                comfort_percent = total_comfort / total_one_hand * 100
+            if total_combinations > 0:
+                comfort_percent = stats['total_comfort'] / total_combinations * 100
             else:
                 comfort_percent = 0
             
-            # Нагрузка на указательные пальцы
-            index_load = (stats['finger_load'].get('left_index', 0) + 
-                         stats['finger_load'].get('right_index', 0))
+            # Нагрузка на пальцы: вычисляем равномерность распределения
+            finger_load = stats['finger_load']
+            
+            # Список всех пальцев (без больших пальцев)
+            fingers = ['left_pinky', 'left_ring', 'left_middle', 'left_index',
+                      'right_index', 'right_middle', 'right_ring', 'right_pinky']
+            
+            # Собираем значения нагрузки для всех пальцев
+            finger_values = []
+            for finger in fingers:
+                finger_values.append(finger_load.get(finger, 0))
+            
+            # Вычисляем стандартное отклонение для оценки равномерности
+            # Чем меньше стандартное отклонение, тем равномернее нагрузка
+            if len(finger_values) > 1:
+                std_dev = np.std(finger_values)
+                # Преобразуем в балл равномерности (чем меньше std_dev, тем выше балл)
+                max_value = max(finger_values) if max(finger_values) > 0 else 1
+                uniformity_score = 100 * (1 - (std_dev / max_value))
+            else:
+                uniformity_score = 0
             
             # Баланс рук
-            hand_penalties = stats['hand_penalties']
-            left_percent = hand_penalties.get('left_percent', 50)
-            right_percent = hand_penalties.get('right_percent', 50)
-            balance_score = 100 - abs(left_percent - right_percent)
+            hand_balance = stats['hand_balance']
+            left_percent = hand_balance.get('left_percent', 50)
+            right_percent = hand_balance.get('right_percent', 50)
+            balance_score = hand_balance.get('balance_score', 0)
+            
+            # Общая нагрузка (для информации)
+            total_finger_load = sum(finger_values)
             
             layout_data.append({
                 'name': layout_name,
                 'comfort_percent': comfort_percent,
-                'total_penalty': total_penalty,
-                'index_load': index_load,
-                'balance_score': balance_score
+                'finger_penalty': finger_penalty,
+                'uniformity_score': uniformity_score,
+                'total_finger_load': total_finger_load,
+                'balance_score': balance_score,
+                'is_good_balance': hand_balance.get('is_good', False),
+                'finger_values': finger_values
             })
-            
-            criteria_data['Удобные комбинации %'].append(comfort_percent)
-            criteria_data['Общий штраф'].append(-total_penalty)  # отрицательный - меньше лучше
-            criteria_data['Нагрузка на указательные'].append(-index_load)  # отрицательный - меньше лучше
-            criteria_data['Баланс рук'].append(balance_score)
         
-        # Вычисляем рейтинги по каждому критерию
-        ratings = {}
-        for criterion, values in criteria_data.items():
-            # Сортируем по значениям (больше лучше)
-            sorted_indices = np.argsort(values)[::-1]
-            for rank, idx in enumerate(sorted_indices):
-                if layout_data[idx]['name'] not in ratings:
-                    ratings[layout_data[idx]['name']] = {}
-                ratings[layout_data[idx]['name']][criterion] = rank + 1
+        # Рассчитываем места по каждой категории
+        # Чем меньше значение (кроме comfort_percent, uniformity_score и balance_score), тем лучше
+        
+        # 1. Удобные комбинации % (чем больше, тем лучше)
+        comfort_sorted = sorted(layout_data, key=lambda x: x['comfort_percent'], reverse=True)
+        for i, layout in enumerate(comfort_sorted):
+            layout['comfort_place'] = i + 1
+        
+        # 2. Штраф на пальцы (чем меньше, тем лучше)
+        penalty_sorted = sorted(layout_data, key=lambda x: x['finger_penalty'])
+        for i, layout in enumerate(penalty_sorted):
+            layout['penalty_place'] = i + 1
+        
+        # 3. Равномерность нагрузки на пальцы (чем больше uniformity_score, тем лучше)
+        uniformity_sorted = sorted(layout_data, key=lambda x: x['uniformity_score'], reverse=True)
+        for i, layout in enumerate(uniformity_sorted):
+            layout['uniformity_place'] = i + 1
+        
+        # 4. Баланс рук (чем ближе к 100%, тем лучше)
+        balance_sorted = sorted(layout_data, key=lambda x: x['balance_score'], reverse=True)
+        for i, layout in enumerate(balance_sorted):
+            layout['balance_place'] = i + 1
+        
+        # Рассчитываем итоговый рейтинг (сумма мест)
+        for layout in layout_data:
+            layout['total_place'] = (
+                layout['comfort_place'] + 
+                layout['penalty_place'] + 
+                layout['uniformity_place'] + 
+                layout['balance_place']
+            )
+        
+        # Сортируем по итоговому рейтингу (чем меньше сумма мест, тем лучше)
+        sorted_layouts = sorted(layout_data, key=lambda x: x['total_place'])
         
         # Выводим таблицу сравнения
-        print(f"\n{'Раскладка':<25} {'Удобные %':<12} {'Штраф':<10} {'Указ.нагр.':<12} {'Баланс':<10} {'Рейтинг':<25}")
-        print("-" * 100)
+        print(f"\n{'Раскладка':<25} {'Удобные %':<12} {'Штраф':<12} {'Равномер.':<10} {'Баланс':<10} {'Места/Итог':<25}")
+        print("-" * 120)
         
-        for layout in layout_data:
+        for i, layout in enumerate(sorted_layouts):
             name = layout['name']
             comfort_str = f"{layout['comfort_percent']:.1f}%"
-            penalty_str = f"{layout['total_penalty']:.1f}"
-            index_str = format_number(layout['index_load'])
+            penalty_str = f"{layout['finger_penalty']:.0f}"
+            
+            # Форматируем равномерность нагрузки
+            uniformity_str = f"{layout['uniformity_score']:.1f}%"
+            
             balance_str = f"{layout['balance_score']:.1f}%"
             
-            # Средний рейтинг
-            avg_rating = np.mean(list(ratings[name].values()))
-            rating_str = f"#{int(avg_rating)} средний"
+            # Места по категориям
+            places_str = f"{layout['comfort_place']}+{layout['penalty_place']}+{layout['uniformity_place']}+{layout['balance_place']}={layout['total_place']}"
             
-            print(f"{name:<25} {comfort_str:<12} {penalty_str:<10} {index_str:<12} {balance_str:<10} {rating_str:<25}")
-        
-        # Выводим рейтинги по критериям
-        print("\n" + "="*100)
-        print("РЕЙТИНГ ПО КРИТЕРИЯМ")
-        print("="*100)
-        
-        for criterion in criteria_data.keys():
-            print(f"\n{criterion}:")
-            # Сортируем раскладки по этому критерию
-            if 'Удобные' in criterion:
-                sorted_layouts = sorted(layout_data, key=lambda x: x['comfort_percent'], reverse=True)
-            elif 'Штраф' in criterion:
-                sorted_layouts = sorted(layout_data, key=lambda x: x['total_penalty'])
-            elif 'Указ' in criterion:
-                sorted_layouts = sorted(layout_data, key=lambda x: x['index_load'])
-            else:  # Баланс
-                sorted_layouts = sorted(layout_data, key=lambda x: x['balance_score'], reverse=True)
+            # Итоговое место
+            final_place = i + 1
+            rating_str = f"#{final_place} ({places_str})"
             
-            for i, layout in enumerate(sorted_layouts[:5]):  # топ-5
-                if 'Удобные' in criterion:
-                    value = layout['comfort_percent']
-                    value_str = f"{value:.1f}%"
-                elif 'Штраф' in criterion:
-                    value = layout['total_penalty']
-                    value_str = f"{value:.1f}"
-                elif 'Указ' in criterion:
-                    value = layout['index_load']
-                    value_str = format_number(int(value))
-                else:  # Баланс
-                    value = layout['balance_score']
-                    value_str = f"{value:.1f}%"
+            print(f"{name:<25} {comfort_str:<12} {penalty_str:<12} {uniformity_str:<10} {balance_str:<10} {rating_str:<25}")
+        
+        # Выводим детальные рейтинги по критериям
+        print("\n" + "="*120)
+        print("ДЕТАЛЬНЫЙ РЕЙТИНГ ПО КРИТЕРИЯМ")
+        print("="*120)
+        
+        categories = [
+            ('Удобные комбинации %', 'comfort_percent', True),
+            ('Штраф на пальцы', 'finger_penalty', False),
+            ('Равномерность нагрузки', 'uniformity_score', True),
+            ('Баланс рук', 'balance_score', True)
+        ]
+        
+        for category_name, field_name, reverse in categories:
+            print(f"\n{category_name}:")
+            
+            if reverse:
+                sorted_by_cat = sorted(layout_data, key=lambda x: x[field_name], reverse=True)
+            else:
+                sorted_by_cat = sorted(layout_data, key=lambda x: x[field_name])
+            
+            for i, layout in enumerate(sorted_by_cat):
+                value = layout[field_name]
                 
-                print(f"  {i+1}. {layout['name']:<20} - {value_str}")
+                if 'percent' in field_name or 'score' in field_name or 'uniformity' in field_name:
+                    value_str = f"{value:.1f}%"
+                elif 'penalty' in field_name:
+                    value_str = f"{value:.0f}"
+                else:
+                    value_str = str(value)
+                
+                print(f"  {i+1}. {layout['name']:<25} - {value_str}")
         
-        # Выводим преимущества и недостатки В СРАВНЕНИИ С ДРУГИМИ
-        print("\n" + "="*100)
-        print("ПРЕИМУЩЕСТВА И НЕДОСТАТКИ (В СРАВНЕНИИ С ДРУГИМИ РАСКЛАДКАМИ)")
-        print("="*100)
+        # Дополнительно: выводим распределение нагрузки по пальцам
+        print("\n" + "="*120)
+        print("РАСПРЕДЕЛЕНИЕ НАГРУЗКИ ПО ПАЛЬЦАМ")
+        print("="*120)
         
-        # Вычисляем средние значения для сравнения
-        avg_comfort = np.mean([d['comfort_percent'] for d in layout_data])
-        avg_penalty = np.mean([d['total_penalty'] for d in layout_data])
-        avg_balance = np.mean([d['balance_score'] for d in layout_data])
-        avg_index_load = np.mean([d['index_load'] for d in layout_data])
+        finger_names = ['Л.мизин', 'Л.безым', 'Л.средн', 'Л.указ', 
+                       'П.указ', 'П.средн', 'П.безым', 'П.мизин']
         
-        # Вычисляем стандартные отклонения
-        std_comfort = np.std([d['comfort_percent'] for d in layout_data])
-        std_penalty = np.std([d['total_penalty'] for d in layout_data])
-        std_balance = np.std([d['balance_score'] for d in layout_data])
-        std_index_load = np.std([d['index_load'] for d in layout_data])
-        
-        for layout in layout_data:
+        for layout in sorted_layouts[:5]:  # Только топ-5
             print(f"\n{layout['name']}:")
+            finger_values = layout['finger_values']
+            total = sum(finger_values)
             
-            advantages = []
-            disadvantages = []
-            
-            # Сравниваем с средним значением +- стандартное отклонение
-            if layout['comfort_percent'] > avg_comfort + std_comfort/2:
-                advantages.append(f"Высокий процент удобных комбинаций ({layout['comfort_percent']:.1f}% vs среднее {avg_comfort:.1f}%)")
-            elif layout['comfort_percent'] < avg_comfort - std_comfort/2:
-                disadvantages.append(f"Низкий процент удобных комбинаций ({layout['comfort_percent']:.1f}% vs среднее {avg_comfort:.1f}%)")
-            
-            if layout['total_penalty'] < avg_penalty - std_penalty/2:
-                advantages.append(f"Низкий общий штраф ({layout['total_penalty']:.1f} vs среднее {avg_penalty:.1f})")
-            elif layout['total_penalty'] > avg_penalty + std_penalty/2:
-                disadvantages.append(f"Высокий общий штраф ({layout['total_penalty']:.1f} vs среднее {avg_penalty:.1f})")
-            
-            if layout['balance_score'] > avg_balance + std_balance/2:
-                advantages.append(f"Отличный баланс между руками ({layout['balance_score']:.1f}% vs среднее {avg_balance:.1f}%)")
-            elif layout['balance_score'] < avg_balance - std_balance/2:
-                disadvantages.append(f"Плохой баланс между руками ({layout['balance_score']:.1f}% vs среднее {avg_balance:.1f}%)")
-            
-            if layout['index_load'] < avg_index_load - std_index_load/2:
-                advantages.append(f"Низкая нагрузка на указательные пальцы ({format_number(layout['index_load'])} vs среднее {format_number(int(avg_index_load))})")
-            elif layout['index_load'] > avg_index_load + std_index_load/2:
-                disadvantages.append(f"Высокая нагрузка на указательные пальцы ({format_number(layout['index_load'])} vs среднее {format_number(int(avg_index_load))})")
-            
-            if advantages:
-                print("  Преимущества:")
-                for adv in advantages:
-                    print(f"    ✓ {adv}")
-            
-            if disadvantages:
-                print("  Недостатки:")
-                for dis in disadvantages:
-                    print(f"    ✗ {dis}")
-            
-            if not advantages and not disadvantages:
-                print("  Средние показатели по всем критериям (близки к среднему по всем раскладкам)")
+            if total > 0:
+                for i, (finger_name, value) in enumerate(zip(finger_names, finger_values)):
+                    percent = (value / total) * 100
+                    bar_length = int(percent / 5)  # 1 символ = 5%
+                    bar = "█" * bar_length
+                    print(f"  {finger_name}: {value:>6} ({percent:5.1f}%) {bar}")
     
     def create_test_files(self):
         """Создает тестовые файлы если они отсутствуют"""
@@ -546,16 +689,14 @@ class LayoutEvaluator:
         test_text = """Привет! Hello! Это тестовый текст для анализа клавиатурных раскладок.
         Программа сравнивает эргономику разных раскладок на основе комбинаций символов.
         
-        Русский текст: ЙЦУКЕН, Вызов, Скоропись, фонетические раскладки.
+        Русский текст: ЙЦУКЕН, Скоропись, фонетические раскладки.
         English text: QWERTY, Dvorak, Colemak, Workman layouts.
         
         Клавиатурная эргономика важна для быстрого и комфортного набора текста.
         Keyboard ergonomics is important for fast and comfortable typing.
         
         Тестируем различные комбинации: привет, hello, программа, algorithm,
-        разработка, development, тестирование, testing, анализ, analysis.
-        
-        Специальные символы: ! @ # $ % ^ & * ( ) _ + { } [ ] | \\ : ; " ' < > ? , . /"""
+        разработка, development, тестирование, testing, анализ, analysis."""
         
         with open('test_text.txt', 'w', encoding='utf-8') as f:
             f.write(test_text)
