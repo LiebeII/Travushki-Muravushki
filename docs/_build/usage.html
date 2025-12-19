@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Использование &mdash; документация Анализатор клавиатурных раскладок </title>
+  <title>Использование программы &mdash; документация Keyboard Layout Analyzer v2.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -20,8 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Поддерживаемые раскладки" href="layouts.html" />
-    <link rel="prev" title="Установка" href="installation.html" /> 
+    <link rel="next" title="Формат JSON для пользовательских раскладок" href="json_format.html" />
+    <link rel="prev" title="Критерии оценки раскладок" href="evaluation_criteria.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +33,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Анализатор клавиатурных раскладок
+            Keyboard Layout Analyzer v2.0
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,16 +45,27 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
               <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Использование</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Основные возможности</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">Кастомные раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Использование программы</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Главное меню</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Опции меню</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1. Показать все раскладки</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json">2. Загрузить кастомную раскладку (JSON)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3. Анализ комбинаций символов для всех раскладок</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4. Анализ комбинаций символов для файла</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">5. Показать результаты последнего анализа</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Критерии оценки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Примеры результатов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Работа с языками</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Примеры использования</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -63,17 +74,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Анализатор клавиатурных раскладок</a>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Использование</li>
+      <li class="breadcrumb-item active">Использование программы</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/usage.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
       </li>
   </ul>
   <hr/>
@@ -82,31 +92,132 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1>Использование<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<h1>Использование программы<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
 <section id="id2">
-<h2>Основные возможности<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
-<ol class="arabic simple">
-<li><p><strong>Показать все раскладки</strong> — просмотр доступных раскладок</p></li>
-<li><p><strong>Загрузить кастомную раскладку</strong> — добавление пользовательских раскладок из JSON</p></li>
-<li><p><strong>Анализ комбинаций символов</strong> — полный анализ всех раскладок</p></li>
-<li><p><strong>Анализ конкретного файла</strong> — анализ текста из указанного файла</p></li>
-<li><p><strong>Показать результаты</strong> — просмотр результатов последнего анализа</p></li>
-</ol>
+<h2>Главное меню<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>При запуске программы отображается главное меню:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>====================================
+Анализатор клавиатурных раскладок
+====================================
+1. Показать все раскладки
+2. Загрузить кастомную раскладку (JSON)
+3. Анализ комбинаций символов для всех раскладок
+4. Анализ комбинаций символов для файла
+5. Показать результаты последнего анализа
+6. Выход
+</pre></div>
+</div>
+<p>Выберите действие [1-6]:</p>
 </section>
 <section id="id3">
-<h2>Кастомные раскладки<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
-<p>Программа поддерживает загрузку пользовательских раскладок в формате JSON.</p>
-<p>Пример формата JSON:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Название раскладки&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;russian/english&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;layout&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="p">[</span><span class="s2">&quot;`&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;7&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;9&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;=&quot;</span><span class="p">],</span>
-<span class="w">        </span><span class="p">[</span><span class="s2">&quot;й&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ц&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;у&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;к&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;е&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;н&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;г&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ш&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;щ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;з&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;х&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ъ&quot;</span><span class="p">],</span>
-<span class="w">        </span><span class="p">[</span><span class="s2">&quot;ф&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ы&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;в&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;а&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;п&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;р&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;о&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;л&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;д&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ж&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;э&quot;</span><span class="p">],</span>
-<span class="w">        </span><span class="p">[</span><span class="s2">&quot;я&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ч&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;с&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;м&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;и&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;т&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ь&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;б&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ю&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="p">]</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="p">}</span>
+<h2>Опции меню<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<section id="id4">
+<h3>1. Показать все раскладки<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p>Отображает список всех доступных раскладок</p></li>
+<li><p>Показывает язык каждой раскладки</p></li>
+<li><p>Включает как встроенные, так и загруженные пользовательские раскладки</p></li>
+</ul>
+<p><strong>Пример вывода:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Доступные</span> <span class="n">раскладки</span><span class="p">:</span>
+<span class="mf">1.</span> <span class="n">ЙЦУКЕН</span> <span class="p">(</span><span class="n">russian</span><span class="p">)</span>
+<span class="mf">2.</span> <span class="n">Скоропись</span> <span class="p">(</span><span class="n">russian</span><span class="p">)</span>
+<span class="mf">3.</span> <span class="n">Фонетическая</span> <span class="p">(</span><span class="n">яВерт</span><span class="p">)</span> <span class="p">(</span><span class="n">russian</span><span class="p">)</span>
+<span class="mf">4.</span> <span class="n">Диктор</span> <span class="p">(</span><span class="n">russian</span><span class="p">)</span>
+<span class="mf">5.</span> <span class="n">Вызов</span> <span class="n">кириллица</span> <span class="p">(</span><span class="n">russian</span><span class="p">)</span>
+<span class="mf">6.</span> <span class="n">QWERTY</span> <span class="p">(</span><span class="n">english</span><span class="p">)</span>
+<span class="mf">7.</span> <span class="n">Dvorak</span> <span class="p">(</span><span class="n">english</span><span class="p">)</span>
+<span class="mf">8.</span> <span class="n">Colemak</span> <span class="p">(</span><span class="n">english</span><span class="p">)</span>
+<span class="mf">9.</span> <span class="n">Workman</span> <span class="p">(</span><span class="n">english</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="json">
+<h3>2. Загрузить кастомную раскладку (JSON)<a class="headerlink" href="#json" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p>Позволяет загрузить пользовательскую раскладку из JSON файла</p></li>
+<li><p>Файл должен соответствовать формату, описанному в <a class="reference internal" href="json_format.html"><span class="doc">Формат JSON для пользовательских раскладок</span></a></p></li>
+<li><p>Раскладка добавляется в общий список и доступна для анализа</p></li>
+</ul>
+<p><strong>Использование:</strong>
+1. Выберите опцию 2 в меню
+2. Введите путь к JSON файлу
+3. При успешной загрузке появится подтверждение</p>
+</section>
+<section id="id5">
+<h3>3. Анализ комбинаций символов для всех раскладок<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p>Проводит анализ на стандартном тестовом тексте</p></li>
+<li><p>Автоматически определяет язык текста</p></li>
+<li><p>Фильтрует раскладки по языку (только русские для русского текста)</p></li>
+<li><p>Выводит подробную статистику и рейтинг</p></li>
+</ul>
+<p><strong>Особенности:</strong>
+- Используется встроенный тестовый текст
+- Подходит для быстрого сравнения всех раскладок
+- Генерирует графики визуализации</p>
+</section>
+<section id="id6">
+<h3>4. Анализ комбинаций символов для файла<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p>Анализирует текст из указанного файла</p></li>
+<li><p>Поддерживает текстовые файлы (.txt)</p></li>
+<li><p>Автоматически определяет язык текста</p></li>
+<li><p>Фильтрует раскладки по языку</p></li>
+</ul>
+<p><strong>Использование:</strong>
+1. Выберите опцию 4 в меню
+2. Введите путь к текстовому файлу
+3. Программа проанализирует файл и выведет результаты</p>
+<p><strong>Поддерживаемые форматы:</strong>
+- Простой текст (.txt)
+- Кодировка: UTF-8 (рекомендуется)</p>
+</section>
+<section id="id7">
+<h3>5. Показать результаты последнего анализа<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p>Отображает результаты последнего проведенного анализа</p></li>
+<li><p>Показывает таблицу сравнения раскладок</p></li>
+<li><p>Выводит рейтинг и места по категориям</p></li>
+</ul>
+<p><strong>Примечание:</strong> Если анализ еще не проводился, будет выведено соответствующее сообщение.</p>
+</section>
+</section>
+<section id="id8">
+<h2>Работа с языками<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>### Автоматическое определение языка:
+- Программа анализирует символы текста
+- Определяет, является ли текст русским, английским или смешанным
+- Автоматически фильтрует раскладки по языку</p>
+<p>### Правила фильтрации:
+1. <strong>Русский текст:</strong> Анализируются только русские раскладки
+2. <strong>Английский текст:</strong> Анализируются только английские раскладки
+3. <strong>Смешанный текст:</strong> Анализируются все раскладки соответствующего языка</p>
+</section>
+<section id="id9">
+<h2>Примеры использования<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p>### Пример 1: Быстрое сравнение русских раскладок</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Выберите</span><span class="p">:</span> <span class="mi">3</span>
+<span class="n">Анализ</span> <span class="n">тестового</span> <span class="n">текста</span><span class="o">...</span>
+<span class="n">Определен</span> <span class="n">язык</span><span class="p">:</span> <span class="n">russian</span>
+<span class="n">Анализ</span> <span class="mi">5</span> <span class="n">русских</span> <span class="n">раскладок</span><span class="o">...</span>
+<span class="n">Результаты</span> <span class="n">сохранены</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>### Пример 2: Анализ конкретного документа</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Выберите</span><span class="p">:</span> <span class="mi">4</span>
+<span class="n">Введите</span> <span class="n">путь</span> <span class="n">к</span> <span class="n">файлу</span><span class="p">:</span> <span class="n">documents</span><span class="o">/</span><span class="n">war_and_peace</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">Чтение</span> <span class="n">файла</span><span class="o">...</span>
+<span class="n">Определен</span> <span class="n">язык</span><span class="p">:</span> <span class="n">russian</span>
+<span class="n">Анализ</span> <span class="mi">5</span> <span class="n">русских</span> <span class="n">раскладок</span><span class="o">...</span>
+<span class="n">Результаты</span> <span class="n">сохранены</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>### Пример 3: Добавление пользовательской раскладки</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Выберите: 2
+Введите путь к JSON файлу: my_layouts/custom.json
+Загрузка раскладки &quot;Моя раскладка&quot; (russian)...
+Успешно загружено!
 </pre></div>
 </div>
 </section>
@@ -116,14 +227,14 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="installation.html" class="btn btn-neutral float-left" title="Установка" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="layouts.html" class="btn btn-neutral float-right" title="Поддерживаемые раскладки" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="evaluation_criteria.html" class="btn btn-neutral float-left" title="Критерии оценки раскладок" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="json_format.html" class="btn btn-neutral float-right" title="Формат JSON для пользовательских раскладок" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2024, Ваше имя или организация. </p>
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

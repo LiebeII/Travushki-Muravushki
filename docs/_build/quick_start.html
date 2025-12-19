@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Быстрый старт &mdash; документация Keyboard Layout Analyzer v2.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=372fde1a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Поддерживаемые раскладки" href="layouts.html" />
+    <link rel="prev" title="Обзор проекта" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Keyboard Layout Analyzer v2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Быстрый старт</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Требования</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Установка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">Первые шаги</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Быстрый старт</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Быстрый старт<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<section id="id2">
+<h2>Требования<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<ul class="simple">
+<li><p><strong>Python 3.8</strong> или выше</p></li>
+<li><p><strong>Библиотеки:</strong> matplotlib, numpy</p></li>
+</ul>
+</section>
+<section id="id3">
+<h2>Установка<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic">
+<li><p>Клонируйте репозиторий:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-username/keyboard-layout-analyzer.git
+<span class="nb">cd</span><span class="w"> </span>keyboard-layout-analyzer
+</pre></div>
+</div>
+</li>
+<li><p>Установите зависимости:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>matplotlib<span class="w"> </span>numpy
+</pre></div>
+</div>
+</li>
+<li><p>Запустите программу:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="id4">
+<h2>Структура проекта<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>keyboard-analyzer/
+├── main.py                      # Главный файл программы
+├── analysis/                    # Модули анализа
+│   ├── text_processor.py       # Обработка текста, определение языка
+│   ├── combo_analyzer.py       # Анализ комбинаций символов
+│   ├── layout_evaluator.py     # Основной класс оценки раскладок
+│   └── finger_penalty_calculator.py # Расчет штрафов по расстоянию
+├── layouts/                     # Данные раскладок
+│   ├── layout_data.py          # Класс LayoutData с картами раскладок
+│   └── layout_maps.py          # Дополнительные карты раскладок
+├── visualization/              # Визуализация результатов
+│   ├── charts.py              # Графики и диаграммы Matplotlib
+│   └── stats_formatter.py     # Форматирование чисел (K, M)
+├── ready_made_layouts/        # Пользовательские раскладки (JSON)
+│   ├── altk.json             # Пример раскладки с Alt-слоем
+│   └── ...                   # Другие пользовательские раскладки
+└── README.md                  # Документация
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>Первые шаги<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p>При первом запуске вы увидите главное меню</p></li>
+<li><p>Выберите «1. Показать все раскладки» для просмотра доступных вариантов</p></li>
+<li><p>Выберите «3. Анализ комбинаций символов для всех раскладок» для тестового анализа</p></li>
+<li><p>Просмотрите результаты в консоли и сгенерированные графики</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="overview.html" class="btn btn-neutral float-left" title="Обзор проекта" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="layouts.html" class="btn btn-neutral float-right" title="Поддерживаемые раскладки" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

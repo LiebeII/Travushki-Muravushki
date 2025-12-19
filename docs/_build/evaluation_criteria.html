@@ -1,0 +1,231 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Критерии оценки раскладок &mdash; документация Keyboard Layout Analyzer v2.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=372fde1a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Использование программы" href="usage.html" />
+    <link rel="prev" title="Поддерживаемые раскладки" href="layouts.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Keyboard Layout Analyzer v2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Критерии оценки раскладок</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1. Удобство комбинаций (40%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2. Штраф на пальцы (30%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3. Равномерность нагрузки на пальцы (20%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4. Баланс между руками (10%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Система рейтинга</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Критерии оценки раскладок</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Критерии оценки раскладок<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<p>Версия 2.0 использует систему оценки из 4 критериев с весами:</p>
+<section id="id2">
+<h2>1. Удобство комбинаций (40%)<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>Что оценивается:</strong>
+- Процент удобных двухсимвольных комбинаций
+- Качество последовательных нажатий в рамках одного слова</p>
+<p><strong>Классификация комбинаций:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Категория</p></th>
+<th class="head"><p>Описание</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Удобные</strong></p></td>
+<td><p>Пальцы движутся от мизинца к указательному на одной руке</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Частично удобные</strong></p></td>
+<td><p>Тот же палец или обратное направление движения</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Неудобные</strong></p></td>
+<td><p>Символы на разных руках</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Формула:</strong>
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">text</span><span class="p">{</span><span class="n">удобные</span>\<span class="n">_процент</span><span class="p">}</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span>\<span class="n">text</span><span class="p">{</span><span class="n">удобные</span>\<span class="n">_комбинации</span><span class="p">}}{</span>\<span class="n">text</span><span class="p">{</span><span class="n">все</span>\<span class="n">_комбинации</span><span class="p">}}</span> \<span class="n">times</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>2. Штраф на пальцы (30%)<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>Что оценивается:</strong>
+- Расстояние от домашнего ряда для каждого символа
+- Дополнительные штрафы за модификаторы</p>
+<p><strong>Система штрафов:</strong></p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Фактор</p></th>
+<th class="head"><p>Описание</p></th>
+<th class="head"><p>Коэффициент</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Базовый</strong></p></td>
+<td><p>Расстояние от домашнего ряда</p></td>
+<td><p>1.0 за каждый ряд</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Shift</strong></p></td>
+<td><p>Использование Shift</p></td>
+<td><p>+3.0 (мизинцы)
++1.5 (другие)</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Alt</strong></p></td>
+<td><p>Использование Alt</p></td>
+<td><p>+0.5</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Особенность:</strong> Для символов, доступных на нескольких слоях, выбирается вариант с наименьшим штрафом.</p>
+</section>
+<section id="id4">
+<h2>3. Равномерность нагрузки на пальцы (20%)<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>Что оценивается:</strong>
+- Стандартное отклонение нагрузки между 8 пальцами
+- Распределение работы между пальцами</p>
+<p><strong>Формула:</strong>
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">text</span><span class="p">{</span><span class="n">uniformity</span>\<span class="n">_score</span><span class="p">}</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> \<span class="n">text</span><span class="p">{</span><span class="n">стандартное</span>\<span class="n">_отклонение</span><span class="p">}</span> \<span class="n">times</span> \<span class="n">text</span><span class="p">{</span><span class="n">коэффициент</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Идеал:</strong> Равномерное распределение нагрузки между всеми пальцами.</p>
+</section>
+<section id="id5">
+<h2>4. Баланс между руками (10%)<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>Что оценивается:</strong>
+- Процентное соотношение нагрузки на левую и правую руку
+- Сбалансированность работы обеих рук</p>
+<p><strong>Формула:</strong>
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">text</span><span class="p">{</span><span class="n">balance</span>\<span class="n">_score</span><span class="p">}</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">-</span> <span class="o">|</span>\<span class="o">%</span>\<span class="n">text</span><span class="p">{</span><span class="n">левой</span>\<span class="n">_руки</span><span class="p">}</span> <span class="o">-</span> <span class="mi">50</span><span class="o">|</span> \<span class="n">times</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p><strong>Идеал:</strong> 50% на левую руку, 50% на правую руку.</p>
+</section>
+<section id="id6">
+<h2>Система рейтинга<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<p>### Расчет мест:</p>
+<ol class="arabic simple">
+<li><p><strong>Удобные комбинации %</strong> → больше = лучше (1 место у самого высокого)</p></li>
+<li><p><strong>Штраф на пальцы</strong> → меньше = лучше (1 место у самого низкого)</p></li>
+<li><p><strong>Равномерность нагрузки</strong> → больше = лучше (1 место у самого высокого)</p></li>
+<li><p><strong>Баланс рук</strong> → больше = лучше (1 место у самого высокого)</p></li>
+</ol>
+<p>### Итоговый рейтинг:
+- <strong>Сумма мест</strong> по всем категориям
+- <strong>Чем меньше сумма</strong>, тем лучше раскладка
+- <strong>Формат:</strong> <cite>2+1+3+2=8</cite> означает 2-е место по удобству, 1-е по штрафу, 3-е по равномерности, 2-е по балансу</p>
+<p>### Пример вывода:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Раскладка</span>                 <span class="n">Удобные</span> <span class="o">%</span>    <span class="n">Штраф</span>        <span class="n">Равномер</span><span class="o">.</span>  <span class="n">Баланс</span>     <span class="n">Места</span><span class="o">/</span><span class="n">Итог</span>
+<span class="o">----------------------------------------------------------------------------------------</span>
+<span class="n">Фонетическая</span> <span class="p">(</span><span class="n">яВерт</span><span class="p">)</span>      <span class="mf">18.9</span><span class="o">%</span>        <span class="mi">3421219</span>      <span class="mf">85.3</span><span class="o">%</span>      <span class="mf">96.2</span><span class="o">%</span>      <span class="c1">#1 (2+4+1+2=9)</span>
+<span class="n">ЙЦУКЕН</span>                    <span class="mf">12.5</span><span class="o">%</span>        <span class="mi">3080088</span>      <span class="mf">78.2</span><span class="o">%</span>      <span class="mf">97.6</span><span class="o">%</span>      <span class="c1">#2 (5+2+3+1=11)</span>
+<span class="n">Диктор</span>                    <span class="mf">18.9</span><span class="o">%</span>        <span class="mi">2654778</span>      <span class="mf">82.1</span><span class="o">%</span>      <span class="mf">63.9</span><span class="o">%</span>      <span class="c1">#3 (3+1+2+4=10)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="layouts.html" class="btn btn-neutral float-left" title="Поддерживаемые раскладки" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Использование программы" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

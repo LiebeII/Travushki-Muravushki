@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Формат JSON для пользовательских раскладок &mdash; документация Keyboard Layout Analyzer v2.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=372fde1a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Визуализация результатов" href="visualization.html" />
+    <link rel="prev" title="Использование программы" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Keyboard Layout Analyzer v2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Формат JSON для пользовательских раскладок</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Обзор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Базовый формат</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Поля</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#layout">Структура layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#alt">Формат с Alt-слоем (двойные назначения)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Синтаксис двойных назначений:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Особые символы</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">Примеры файлов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Проверка корректности</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Советы по созданию раскладок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Автоматическая загрузка</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Формат JSON для пользовательских раскладок</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="json">
+<h1>Формат JSON для пользовательских раскладок<a class="headerlink" href="#json" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Обзор<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p>Программа поддерживает загрузку пользовательских раскладок через JSON файлы. Все файлы из папки <cite>ready_made_layouts/</cite> загружаются автоматически при запуске.</p>
+</section>
+<section id="id2">
+<h2>Базовый формат<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Минимальная структура JSON файла:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Название раскладки&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;russian&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;layout&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;7&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;9&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;й&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ц&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;у&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;к&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;е&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;н&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;г&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ш&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;щ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;з&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;х&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ъ&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;ф&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ы&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;в&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;а&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;п&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;р&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;о&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;л&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;д&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ж&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;э&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;я&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ч&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;с&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;м&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;и&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;т&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ь&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;б&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ю&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="id3">
+<h3>Поля<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h3>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Поле</p></th>
+<th class="head"><p>Тип</p></th>
+<th class="head"><p>Описание</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>name</p></td>
+<td><p>string</p></td>
+<td><p>Название раскладки (отображается в меню)</p></td>
+</tr>
+<tr class="row-odd"><td><p>language</p></td>
+<td><p>string</p></td>
+<td><p>Язык раскладки: «russian» или «english»</p></td>
+</tr>
+<tr class="row-even"><td><p>layout</p></td>
+<td><p>array of arrays</p></td>
+<td><p>Матрица раскладки (4 строки, разной длины)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="layout">
+<h2>Структура layout<a class="headerlink" href="#layout" title="Ссылка на этот заголовок"></a></h2>
+<p>Раскладка представляется как массив из 4 строк (рядов клавиатуры):</p>
+<ol class="arabic simple">
+<li><p><strong>Верхний ряд:</strong> Цифры и символы (длина 10-13 символов)</p></li>
+<li><p><strong>Верхний буквенный ряд:</strong> (длина 11-13 символов)</p></li>
+<li><p><strong>Средний ряд (домашний):</strong> (длина 10-12 символов)</p></li>
+<li><p><strong>Нижний ряд:</strong> (длина 9-10 символов)</p></li>
+</ol>
+<p><strong>Важно:</strong> Длины строк могут отличаться, что соответствует реальной клавиатуре.</p>
+</section>
+<section id="alt">
+<h2>Формат с Alt-слоем (двойные назначения)<a class="headerlink" href="#alt" title="Ссылка на этот заголовок"></a></h2>
+<p>Для поддержки нескольких слоев используется формат «символ1/символ2»:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Вызов кириллица&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;language&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;russian&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;layout&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot; /ю&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ё&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;7&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;3&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;9&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;4&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;6&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;8&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;щ&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;в&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ы&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;о&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;у/ю&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ь&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ё&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;л&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;д&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;я&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;г&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ж&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ц&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ъ&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;ч/ц&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;и&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;е/э&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;а&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;н/щ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;т/ъ&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;с&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;б&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;з&quot;</span><span class="p">],</span>
+<span class="w">        </span><span class="p">[</span><span class="s2">&quot;ш&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;х&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;й&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;к&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; /э&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;р/ц&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;м&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ф&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;п&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="id4">
+<h3>Синтаксис двойных назначений:<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>«ч/ц»</strong> означает:
+- <cite>ч</cite> — основной символ (без модификаторов)
+- <cite>ц</cite> — символ на Alt-слое (с нажатым Alt)</p></li>
+<li><p><strong>« /ю»</strong> означает:
+- Пробел (или ничего) — основной символ
+- <cite>ю</cite> — символ на Alt-слое</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Особые символы<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Пробел:</strong> Обозначается как « « (один пробел)</p></li>
+<li><p><strong>Пустой слот:</strong> Обозначается как «» (пустая строка)</p></li>
+<li><p><strong>Символы с модификаторами:</strong> Используйте формат «основной/alt»</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h2>Примеры файлов<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h2>
+<p>### Пример 1: Простая русская раскладка</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ready_made_layouts</span><span class="o">/</span><span class="n">simple_russian</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>### Пример 2: Раскладка с Alt-слоем</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ready_made_layouts</span><span class="o">/</span><span class="n">with_alt_layer</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>### Пример 3: Английская раскладка</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ready_made_layouts</span><span class="o">/</span><span class="n">custom_english</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>Проверка корректности<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<p>При загрузке JSON файла программа проверяет:</p>
+<ol class="arabic simple">
+<li><p><strong>Обязательные поля:</strong> name, language, layout</p></li>
+<li><p><strong>Корректность языка:</strong> «russian» или «english»</p></li>
+<li><p><strong>Структуру layout:</strong> Должен быть массивом из 4 элементов</p></li>
+<li><p><strong>Синтаксис двойных назначений:</strong> Формат «символ1/символ2»</p></li>
+</ol>
+</section>
+<section id="id8">
+<h2>Советы по созданию раскладок<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Начинайте с копии существующей:</strong> Возьмите за основу одну из встроенных раскладок</p></li>
+<li><p><strong>Тестируйте поэтапно:</strong> Сначала простую версию, затем добавляйте Alt-слой</p></li>
+<li><p><strong>Используйте осмысленные имена:</strong> Например, «Моя раскладка v1.2»</p></li>
+<li><p><strong>Сохраняйте в UTF-8:</strong> Для поддержки русских символов</p></li>
+<li><p><strong>Размещайте в правильной папке:</strong> Все JSON файлы должны быть в <cite>ready_made_layouts/</cite></p></li>
+</ol>
+</section>
+<section id="id9">
+<h2>Автоматическая загрузка<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p>При запуске программы:
+1. Сканируется папка <cite>ready_made_layouts/</cite>
+2. Находятся все файлы с расширением <cite>.json</cite>
+3. Каждый файл проверяется и загружается
+4. Загруженные раскладки добавляются в общий список</p>
+<p><strong>Примечание:</strong> При ошибке загрузки конкретного файла программа продолжит работу с остальными.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Использование программы" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="visualization.html" class="btn btn-neutral float-right" title="Визуализация результатов" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

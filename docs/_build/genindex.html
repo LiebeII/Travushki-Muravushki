@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Алфавитный указатель &mdash; документация Анализатор клавиатурных раскладок </title>
+  <title>Алфавитный указатель &mdash; документация Keyboard Layout Analyzer v2.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -30,7 +30,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Анализатор клавиатурных раскладок
+            Keyboard Layout Analyzer v2.0
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -42,12 +42,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
               <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Критерии оценки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Примеры результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -56,11 +58,11 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Анализатор клавиатурных раскладок</a>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
@@ -77,8 +79,87 @@
 <h1 id="index">Алфавитный указатель</h1>
 
 <div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  
 </div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#LayoutEvaluator.analyze_combinations_all_layouts">analyze_combinations_all_layouts() (метод LayoutEvaluator)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#ComboAnalyzer.analyze_word">analyze_word() (метод ComboAnalyzer)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#TextProcessor.detect_language">detect_language() (метод TextProcessor)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#TextProcessor.extract_words">extract_words() (метод TextProcessor)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#LayoutData.language">language (атрибут LayoutData)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#LayoutData.layout">layout (атрибут LayoutData)</a>
+</li>
+      <li><a href="api_reference.html#LayoutEvaluator.load_custom_layout">load_custom_layout() (метод LayoutEvaluator)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#LayoutData.name">name (атрибут LayoutData)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#Charts.plot_finger_load">plot_finger_load() (метод Charts)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#Charts.plot_total_penalty">plot_total_penalty() (метод Charts)</a>
+</li>
+      <li><a href="api_reference.html#LayoutEvaluator.print_combinations_comparison">print_combinations_comparison() (метод LayoutEvaluator)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_reference.html#LayoutEvaluator.visualize_results">visualize_results() (метод LayoutEvaluator)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 
 
            </div>
@@ -88,7 +169,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2024, Ваше имя или организация. </p>
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

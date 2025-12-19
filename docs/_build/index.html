@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Документация Анализатора клавиатурных раскладок &mdash; документация Анализатор клавиатурных раскладок </title>
+  <title>Документация Keyboard Layout Analyzer v2.0 &mdash; документация Keyboard Layout Analyzer v2.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -20,7 +20,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Обзор" href="overview.html" /> 
+    <link rel="next" title="Обзор проекта" href="overview.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -32,7 +32,7 @@
           
           
           <a href="#" class="icon icon-home">
-            Анализатор клавиатурных раскладок
+            Keyboard Layout Analyzer v2.0
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -44,12 +44,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
               <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Критерии оценки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Примеры результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -58,17 +60,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Анализатор клавиатурных раскладок</a>
+          <a href="#">Keyboard Layout Analyzer v2.0</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Документация Анализатора клавиатурных раскладок</li>
+      <li class="breadcrumb-item active">Документация Keyboard Layout Analyzer v2.0</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
       </li>
   </ul>
   <hr/>
@@ -76,68 +77,139 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="id1">
-<h1>Документация Анализатора клавиатурных раскладок<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+  <section id="keyboard-layout-analyzer-v2-0">
+<h1>Документация Keyboard Layout Analyzer v2.0<a class="headerlink" href="#keyboard-layout-analyzer-v2-0" title="Ссылка на этот заголовок"></a></h1>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#id2">Цель проекта</a></li>
-<li class="toctree-l2"><a class="reference internal" href="overview.html#id3">Особенности</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id2">Цели проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id3">Ключевые особенности</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id2">Требования</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id3">Шаги установки</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#id4">Структура проекта</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#id2">Основные возможности</a></li>
-<li class="toctree-l2"><a class="reference internal" href="usage.html#id3">Кастомные раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#id2">Требования</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#id3">Установка</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#id4">Структура проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#id5">Первые шаги</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="layouts.html#id2">Русские раскладки</a></li>
-<li class="toctree-l2"><a class="reference internal" href="layouts.html#id3">Английские раскладки</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layouts.html#id2">Русские раскладки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#id3">ЙЦУКЕН</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#id4">Скоропись</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#id5">Фонетическая (яВерт)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#id6">Диктор</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#id7">Вызов кириллица</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Критерии оценки</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="evaluation.html#id2">1. Удобство комбинаций</a></li>
-<li class="toctree-l2"><a class="reference internal" href="evaluation.html#id3">2. Распределение нагрузки</a></li>
-<li class="toctree-l2"><a class="reference internal" href="evaluation.html#id4">3. Эргономика</a></li>
-<li class="toctree-l2"><a class="reference internal" href="evaluation.html#id5">Технические детали</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layouts.html#id8">Английские раскладки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#qwerty">QWERTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#dvorak">Dvorak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#colemak">Colemak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="layouts.html#workman">Workman</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Примеры результатов</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="results.html#id2">Результаты анализа «Война и мир» Л.Н. Толстого</a></li>
-<li class="toctree-l2"><a class="reference internal" href="results.html#id3">Визуализация</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layouts.html#id9">Пользовательские раскладки</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation_criteria.html#id2">1. Удобство комбинаций (40%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation_criteria.html#id3">2. Штраф на пальцы (30%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation_criteria.html#id4">3. Равномерность нагрузки на пальцы (20%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation_criteria.html#id5">4. Баланс между руками (10%)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation_criteria.html#id6">Система рейтинга</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#id2">Главное меню</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#id3">Опции меню</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#id4">1. Показать все раскладки</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#json">2. Загрузить кастомную раскладку (JSON)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#id5">3. Анализ комбинаций символов для всех раскладок</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#id6">4. Анализ комбинаций символов для файла</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#id7">5. Показать результаты последнего анализа</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#id8">Работа с языками</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#id9">Примеры использования</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#id1">Обзор</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#id2">Базовый формат</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="json_format.html#id3">Поля</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#layout">Структура layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#alt">Формат с Alt-слоем (двойные назначения)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="json_format.html#id4">Синтаксис двойных назначений:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="json_format.html#id5">Особые символы</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#id6">Примеры файлов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#id7">Проверка корректности</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#id8">Советы по созданию раскладок</a></li>
+<li class="toctree-l2"><a class="reference internal" href="json_format.html#id9">Автоматическая загрузка</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#id2">Типы графиков</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#id3">1. Статистика нагрузки на пальцы</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#id4">2. Штраф на пальцы по раскладкам</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#id5">3. Баланс между руками</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualization.html#id6">4. Распределение комбинаций по удобству</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#id7">Примеры графиков</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#id8">Настройка визуализации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#id9">Интерпретация графиков</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualization.html#id10">Использование в отчетах</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#id1">Основные классы</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_reference.html#layoutevaluator">LayoutEvaluator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_reference.html#layoutdata">LayoutData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_reference.html#textprocessor">TextProcessor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_reference.html#comboanalyzer">ComboAnalyzer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_reference.html#charts">Charts</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
+<section id="id1">
+<h2>Обзор<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<p><strong>Keyboard Layout Analyzer v2.0</strong> — это продвинутая программа для комплексного анализа и сравнения клавиатурных раскладок с точки зрения эргономики, удобства набора и распределения нагрузки на пальцы.</p>
 <section id="id2">
-<h2>Обзор проекта<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
-<p><strong>Анализатор клавиатурных раскладок</strong> — это программа для комплексного анализа и сравнения различных клавиатурных раскладок с точки зрения эргономики, удобства набора и распределения нагрузки на пальцы.</p>
+<h3>Основные нововведения в версии 2.0:<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h3>
+<p>✅ <strong>Многоязычный анализ:</strong> Автоматическое определение языка текста
+✅ <strong>Поддержка нескольких слоев:</strong> Учет Alt-слоя с выбором оптимального варианта
+✅ <strong>Расширенная система рейтинга:</strong> 4 критерия оценки с весами
+✅ <strong>Улучшенная визуализация:</strong> Интерактивные графики Matplotlib
+✅ <strong>Гибкая архитектура:</strong> Легкое добавление новых раскладок и критериев</p>
+</section>
+</section>
 <section id="id3">
-<h3>Основные возможности<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h3>
-<ul class="simple">
-<li><p>Анализ русских и английских раскладок</p></li>
-<li><p>Учет эргономики: одноручные комбинации, нагрузка на пальцы, баланс между руками</p></li>
-<li><p>Визуализация результатов</p></li>
-<li><p>Поддержка пользовательских раскладок через JSON</p></li>
-<li><p>Анализ текста с учетом контекста</p></li>
-</ul>
-</section>
-</section>
-<section id="id4">
-<h2>Быстрый старт<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ваш-username/keyboard-layout-analyzer.git
+<h2>Быстрый старт<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-username/keyboard-layout-analyzer.git
 <span class="nb">cd</span><span class="w"> </span>keyboard-layout-analyzer
 pip<span class="w"> </span>install<span class="w"> </span>matplotlib<span class="w"> </span>numpy
 python<span class="w"> </span>main.py
 </pre></div>
 </div>
+<section id="id4">
+<h3>Иконки статуса<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h3>
+<a class="reference external image-reference" href="https://python.org"><img alt="Python 3.8+" src="https://img.shields.io/badge/Python-3.8+-blue.svg" />
+</a>
+<a class="reference external image-reference" href="#"><img alt="Version 2.0" src="https://img.shields.io/badge/Version-2.0-green.svg" />
+</a>
+</section>
 </section>
 </section>
 
@@ -145,13 +217,13 @@ python<span class="w"> </span>main.py
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="overview.html" class="btn btn-neutral float-right" title="Обзор" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="overview.html" class="btn btn-neutral float-right" title="Обзор проекта" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2024, Ваше имя или организация. </p>
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

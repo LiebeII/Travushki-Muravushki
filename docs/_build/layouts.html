@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Поддерживаемые раскладки &mdash; документация Анализатор клавиатурных раскладок </title>
+  <title>Поддерживаемые раскладки &mdash; документация Keyboard Layout Analyzer v2.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -20,8 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Критерии оценки" href="evaluation.html" />
-    <link rel="prev" title="Использование" href="usage.html" /> 
+    <link rel="next" title="Критерии оценки раскладок" href="evaluation_criteria.html" />
+    <link rel="prev" title="Быстрый старт" href="quick_start.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +33,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Анализатор клавиатурных раскладок
+            Keyboard Layout Analyzer v2.0
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,16 +45,32 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
               <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор</a></li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Поддерживаемые раскладки</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Русские раскладки</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">Английские раскладки</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Русские раскладки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">ЙЦУКЕН</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Скоропись</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Фонетическая (яВерт)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Диктор</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Вызов кириллица</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Критерии оценки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Примеры результатов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Английские раскладки</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qwerty">QWERTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dvorak">Dvorak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#colemak">Colemak</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workman">Workman</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Пользовательские раскладки</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -63,17 +79,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Анализатор клавиатурных раскладок</a>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Поддерживаемые раскладки</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/layouts.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
       </li>
   </ul>
   <hr/>
@@ -83,23 +98,90 @@
              
   <section id="id1">
 <h1>Поддерживаемые раскладки<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<p>Версия 2.0 поддерживает следующие раскладки:</p>
 <section id="id2">
 <h2>Русские раскладки<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<section id="id3">
+<h3>ЙЦУКЕН<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h3>
 <ul class="simple">
-<li><p><strong>ЙЦУКЕН</strong> — стандартная русская раскладка</p></li>
-<li><p><strong>Скоропись</strong> — эргономичная русская раскладка</p></li>
-<li><p><strong>Фонетическая (яВерт)</strong> — раскладка, где русские буквы соответствуют английским по звучанию</p></li>
-<li><p><strong>Вызов</strong> — альтернативная русская раскладка</p></li>
+<li><p><strong>Тип:</strong> Стандартная русская раскладка</p></li>
+<li><p><strong>Особенности:</strong> Наиболее распространенная, используется по умолчанию</p></li>
+<li><p><strong>Преимущества:</strong> Хороший баланс рук, привычная для большинства пользователей</p></li>
 </ul>
 </section>
-<section id="id3">
-<h2>Английские раскладки<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<section id="id4">
+<h3>Скоропись<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h3>
 <ul class="simple">
-<li><p><strong>QWERTY</strong> — стандартная английская раскладка</p></li>
-<li><p><strong>Dvorak</strong> — эргономичная раскладка, разработанная для скорости и удобства</p></li>
-<li><p><strong>Colemak</strong> — современная эргономичная раскладка</p></li>
-<li><p><strong>Workman</strong> — раскладка, оптимизированная для английского языка</p></li>
+<li><p><strong>Тип:</strong> Эргономичная русская раскладка</p></li>
+<li><p><strong>Особенности:</strong> Оптимизирована для скорости набора</p></li>
+<li><p><strong>Назначение:</strong> Альтернатива ЙЦУКЕН с лучшей эргономикой</p></li>
 </ul>
+</section>
+<section id="id5">
+<h3>Фонетическая (яВерт)<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Фонетическая русская раскладка</p></li>
+<li><p><strong>Особенности:</strong> Русские буквы соответствуют английским по звучанию</p></li>
+<li><p><strong>Пример:</strong> «А» на месте «F», «Б» на месте «,»</p></li>
+<li><p><strong>Для кого:</strong> Пользователи, знакомые с QWERTY</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Диктор<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Эргономичная раскладка для диктовки</p></li>
+<li><p><strong>Особенности:</strong> Оптимизирована для русского языка</p></li>
+<li><p><strong>Назначение:</strong> Профессиональный набор текста</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Вызов кириллица<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Альтернативная русская раскладка</p></li>
+<li><p><strong>Особенности:</strong> Поддержка Alt-слоя, оптимизированные биграммы</p></li>
+<li><p><strong>Формат:</strong> Использует двойные назначения (например, «ч/ц»)</p></li>
+</ul>
+</section>
+</section>
+<section id="id8">
+<h2>Английские раскладки<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<section id="qwerty">
+<h3>QWERTY<a class="headerlink" href="#qwerty" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Стандартная английская раскладка</p></li>
+<li><p><strong>Особенности:</strong> Самая распространенная в мире</p></li>
+<li><p><strong>История:</strong> Разработана для пишущих машинок</p></li>
+</ul>
+</section>
+<section id="dvorak">
+<h3>Dvorak<a class="headerlink" href="#dvorak" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Эргономичная раскладка</p></li>
+<li><p><strong>Особенности:</strong> Оптимизирована для скорости и удобства</p></li>
+<li><p><strong>Расположение:</strong> Гласные на домашнем ряду левой руки</p></li>
+</ul>
+</section>
+<section id="colemak">
+<h3>Colemak<a class="headerlink" href="#colemak" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Современная эргономичная раскладка</p></li>
+<li><p><strong>Особенности:</strong> Сохраняет многие комбинации QWERTY</p></li>
+<li><p><strong>Преимущества:</strong> Меньшая нагрузка на мизинцы</p></li>
+</ul>
+</section>
+<section id="workman">
+<h3>Workman<a class="headerlink" href="#workman" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Тип:</strong> Оптимизированная для английского языка</p></li>
+<li><p><strong>Особенности:</strong> Минимизация движения пальцев</p></li>
+<li><p><strong>Философия:</strong> Учет частотности биграмм в английском</p></li>
+</ul>
+</section>
+</section>
+<section id="id9">
+<h2>Пользовательские раскладки<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p>Программа автоматически загружает все <cite>.json</cite> файлы из папки <cite>ready_made_layouts/</cite>.
+Формат файлов описан в разделе <a class="reference internal" href="json_format.html"><span class="doc">Формат JSON для пользовательских раскладок</span></a>.</p>
 </section>
 </section>
 
@@ -107,14 +189,14 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="usage.html" class="btn btn-neutral float-left" title="Использование" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="evaluation.html" class="btn btn-neutral float-right" title="Критерии оценки" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="quick_start.html" class="btn btn-neutral float-left" title="Быстрый старт" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="evaluation_criteria.html" class="btn btn-neutral float-right" title="Критерии оценки раскладок" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2024, Ваше имя или организация. </p>
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

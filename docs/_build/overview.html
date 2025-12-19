@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Обзор &mdash; документация Анализатор клавиатурных раскладок </title>
+  <title>Обзор проекта &mdash; документация Keyboard Layout Analyzer v2.0 </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -20,8 +20,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Алфавитный указатель" href="genindex.html" />
     <link rel="search" title="Поиск" href="search.html" />
-    <link rel="next" title="Установка" href="installation.html" />
-    <link rel="prev" title="Документация Анализатора клавиатурных раскладок" href="index.html" /> 
+    <link rel="next" title="Быстрый старт" href="quick_start.html" />
+    <link rel="prev" title="Документация Keyboard Layout Analyzer v2.0" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,7 +33,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Анализатор клавиатурных раскладок
+            Keyboard Layout Analyzer v2.0
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,16 +45,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
               <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Обзор</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Цель проекта</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">Особенности</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Обзор проекта</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Цели проекта</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Ключевые особенности</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">Установка</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
 <li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Критерии оценки</a></li>
-<li class="toctree-l1"><a class="reference internal" href="results.html">Примеры результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
         </div>
@@ -63,17 +65,16 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Анализатор клавиатурных раскладок</a>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
       </nav>
 
       <div class="wy-nav-content">
-        <div class="rst-content">
+        <div class="rst-content style-external-links">
           <div role="navigation" aria-label="Навигация по страницам">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Обзор</li>
+      <li class="breadcrumb-item active">Обзор проекта</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/overview.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
       </li>
   </ul>
   <hr/>
@@ -82,34 +83,55 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1>Обзор<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<h1>Обзор проекта<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
 <section id="id2">
-<h2>Цель проекта<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
-<p>Анализатор клавиатурных раскладок предназначен для объективной оценки различных раскладок клавиатуры с использованием метрик эргономики, удобства набора и распределения нагрузки на пальцы рук.</p>
+<h2>Цели проекта<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<p>Keyboard Layout Analyzer предназначен для:</p>
+<ol class="arabic simple">
+<li><p><strong>Объективной оценки</strong> клавиатурных раскладок с использованием научных метрик</p></li>
+<li><p><strong>Сравнительного анализа</strong> различных раскладок по единым критериям</p></li>
+<li><p><strong>Помощи в выборе</strong> оптимальной раскладки для конкретных задач</p></li>
+<li><p><strong>Исследования эргономики</strong> и разработки новых раскладок</p></li>
+</ol>
 </section>
 <section id="id3">
-<h2>Особенности<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
+<h2>Ключевые особенности<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h2>
 <dl class="simple">
-<dt>✨ <strong>Многоязычная поддержка:</strong></dt><dd><ul class="simple">
-<li><p>Русские и английские раскладки</p></li>
+<dt>✨ <strong>Многоязычный анализ</strong></dt><dd><ul class="simple">
+<li><p>Автоматическое определение языка текста</p></li>
+<li><p>Фильтрация раскладок по языку</p></li>
+<li><p>Поддержка русских и английских раскладок</p></li>
 </ul>
 </dd>
-<dt>✨ <strong>Расширенная эргономика:</strong></dt><dd><ul class="simple">
-<li><p>Учет одноручных комбинаций</p></li>
-<li><p>Анализ нагрузки на пальцы</p></li>
+<dt>✨ <strong>Расширенная эргономика</strong></dt><dd><ul class="simple">
+<li><p>Учет удобства двухсимвольных комбинаций</p></li>
+<li><p>Анализ нагрузки на каждый палец</p></li>
 <li><p>Баланс между левой и правой рукой</p></li>
+<li><p>Расчет штрафов по расстоянию от домашнего ряда</p></li>
 </ul>
 </dd>
-<dt>✨ <strong>Визуализация:</strong></dt><dd><ul class="simple">
-<li><p>Интерактивные графики и диаграммы</p></li>
+<dt>✨ <strong>Поддержка нескольких слоев</strong></dt><dd><ul class="simple">
+<li><p>Учет второго слоя через Alt</p></li>
+<li><p>Автоматический выбор варианта с наименьшим штрафом</p></li>
+<li><p>Формат «символ1/символ2» для двойных назначений</p></li>
 </ul>
 </dd>
-<dt>✨ <strong>Гибкость:</strong></dt><dd><ul class="simple">
-<li><p>Поддержка кастомных раскладок через JSON</p></li>
+<dt>✨ <strong>Визуализация результатов</strong></dt><dd><ul class="simple">
+<li><p>Интерактивные графики Matplotlib</p></li>
+<li><p>Сравнительные диаграммы</p></li>
+<li><p>Детальная статистика в табличном виде</p></li>
 </ul>
 </dd>
-<dt>✨ <strong>Анализ по словам:</strong></dt><dd><ul class="simple">
-<li><p>Учет контекста при анализе комбинаций символов</p></li>
+<dt>✨ <strong>Гибкость и расширяемость</strong></dt><dd><ul class="simple">
+<li><p>Поддержка пользовательских раскладок через JSON</p></li>
+<li><p>Автоматическая загрузка из папки ready_made_layouts</p></li>
+<li><p>Модульная архитектура для добавления новых критериев</p></li>
+</ul>
+</dd>
+<dt>✨ <strong>Подробная статистика</strong></dt><dd><ul class="simple">
+<li><p>Анализ по словам с учетом контекста</p></li>
+<li><p>Классификация комбинаций по удобству</p></li>
+<li><p>Расчет рейтинга по 4 критериям с весами</p></li>
 </ul>
 </dd>
 </dl>
@@ -120,14 +142,14 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
-        <a href="index.html" class="btn btn-neutral float-left" title="Документация Анализатора клавиатурных раскладок" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
-        <a href="installation.html" class="btn btn-neutral float-right" title="Установка" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Документация Keyboard Layout Analyzer v2.0" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="quick_start.html" class="btn btn-neutral float-right" title="Быстрый старт" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Авторские права 2024, Ваше имя или организация. </p>
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
   </div>
 
   Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием

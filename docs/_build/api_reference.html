@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; документация Keyboard Layout Analyzer v2.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=372fde1a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="Визуализация результатов" href="visualization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Keyboard Layout Analyzer v2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Визуализация результатов</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Основные классы</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#layoutevaluator">LayoutEvaluator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutEvaluator.load_custom_layout"><code class="docutils literal notranslate"><span class="pre">LayoutEvaluator.load_custom_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutEvaluator.analyze_combinations_all_layouts"><code class="docutils literal notranslate"><span class="pre">LayoutEvaluator.analyze_combinations_all_layouts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutEvaluator.print_combinations_comparison"><code class="docutils literal notranslate"><span class="pre">LayoutEvaluator.print_combinations_comparison()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutEvaluator.visualize_results"><code class="docutils literal notranslate"><span class="pre">LayoutEvaluator.visualize_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#layoutdata">LayoutData</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutData.name"><code class="docutils literal notranslate"><span class="pre">LayoutData.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutData.language"><code class="docutils literal notranslate"><span class="pre">LayoutData.language</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#LayoutData.layout"><code class="docutils literal notranslate"><span class="pre">LayoutData.layout</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#textprocessor">TextProcessor</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#TextProcessor.detect_language"><code class="docutils literal notranslate"><span class="pre">TextProcessor.detect_language()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#TextProcessor.extract_words"><code class="docutils literal notranslate"><span class="pre">TextProcessor.extract_words()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#comboanalyzer">ComboAnalyzer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ComboAnalyzer.analyze_word"><code class="docutils literal notranslate"><span class="pre">ComboAnalyzer.analyze_word()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#charts">Charts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Charts.plot_finger_load"><code class="docutils literal notranslate"><span class="pre">Charts.plot_finger_load()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Charts.plot_total_penalty"><code class="docutils literal notranslate"><span class="pre">Charts.plot_total_penalty()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Ссылка на этот заголовок"></a></h1>
+<section id="id1">
+<h2>Основные классы<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h2>
+<section id="layoutevaluator">
+<h3>LayoutEvaluator<a class="headerlink" href="#layoutevaluator" title="Ссылка на этот заголовок"></a></h3>
+<p>Основной класс для оценки раскладок.</p>
+<p><strong>Основные методы:</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="LayoutEvaluator.load_custom_layout">
+<span class="sig-prename descclassname"><span class="pre">LayoutEvaluator.</span></span><span class="sig-name descname"><span class="pre">load_custom_layout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#LayoutEvaluator.load_custom_layout" title="Ссылка на это определение"></a></dt>
+<dd><p>Загружает пользовательскую раскладку из JSON файла.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – Путь к JSON файлу</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>True если успешно, False если ошибка</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="LayoutEvaluator.analyze_combinations_all_layouts">
+<span class="sig-prename descclassname"><span class="pre">LayoutEvaluator.</span></span><span class="sig-name descname"><span class="pre">analyze_combinations_all_layouts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#LayoutEvaluator.analyze_combinations_all_layouts" title="Ссылка на это определение"></a></dt>
+<dd><p>Анализирует комбинации символов для всех раскладок.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – Путь к файлу с текстом (опционально)</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Статистика анализа</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="LayoutEvaluator.print_combinations_comparison">
+<span class="sig-prename descclassname"><span class="pre">LayoutEvaluator.</span></span><span class="sig-name descname"><span class="pre">print_combinations_comparison</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LayoutEvaluator.print_combinations_comparison" title="Ссылка на это определение"></a></dt>
+<dd><p>Выводит сравнение раскладок в консоль.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="LayoutEvaluator.visualize_results">
+<span class="sig-prename descclassname"><span class="pre">LayoutEvaluator.</span></span><span class="sig-name descname"><span class="pre">visualize_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#LayoutEvaluator.visualize_results" title="Ссылка на это определение"></a></dt>
+<dd><p>Генерирует графики визуализации.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="layoutdata">
+<h3>LayoutData<a class="headerlink" href="#layoutdata" title="Ссылка на этот заголовок"></a></h3>
+<p>Класс для хранения данных раскладки.</p>
+<p><strong>Атрибуты:</strong></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="LayoutData.name">
+<span class="sig-prename descclassname"><span class="pre">LayoutData.</span></span><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#LayoutData.name" title="Ссылка на это определение"></a></dt>
+<dd><p>Название раскладки.
+:type: str</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="LayoutData.language">
+<span class="sig-prename descclassname"><span class="pre">LayoutData.</span></span><span class="sig-name descname"><span class="pre">language</span></span><a class="headerlink" href="#LayoutData.language" title="Ссылка на это определение"></a></dt>
+<dd><p>Язык раскладки („russian“ или „english“).
+:type: str</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="LayoutData.layout">
+<span class="sig-prename descclassname"><span class="pre">LayoutData.</span></span><span class="sig-name descname"><span class="pre">layout</span></span><a class="headerlink" href="#LayoutData.layout" title="Ссылка на это определение"></a></dt>
+<dd><p>Матрица раскладки (4xN).
+:type: list</p>
+</dd></dl>
+
+</section>
+<section id="textprocessor">
+<h3>TextProcessor<a class="headerlink" href="#textprocessor" title="Ссылка на этот заголовок"></a></h3>
+<p>Класс для обработки текста.</p>
+<p><strong>Методы:</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TextProcessor.detect_language">
+<span class="sig-prename descclassname"><span class="pre">TextProcessor.</span></span><span class="sig-name descname"><span class="pre">detect_language</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TextProcessor.detect_language" title="Ссылка на это определение"></a></dt>
+<dd><p>Определяет язык текста.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Текст для анализа</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>„russian“, „english“ или „mixed“</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TextProcessor.extract_words">
+<span class="sig-prename descclassname"><span class="pre">TextProcessor.</span></span><span class="sig-name descname"><span class="pre">extract_words</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TextProcessor.extract_words" title="Ссылка на это определение"></a></dt>
+<dd><p>Извлекает слова из текста.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Текст для обработки</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Список слов</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="comboanalyzer">
+<h3>ComboAnalyzer<a class="headerlink" href="#comboanalyzer" title="Ссылка на этот заголовок"></a></h3>
+<p>Класс для анализа комбинаций символов.</p>
+<p><strong>Методы:</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ComboAnalyzer.analyze_word">
+<span class="sig-prename descclassname"><span class="pre">ComboAnalyzer.</span></span><span class="sig-name descname"><span class="pre">analyze_word</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ComboAnalyzer.analyze_word" title="Ссылка на это определение"></a></dt>
+<dd><p>Анализирует комбинации символов в слове.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>word</strong> (<em>str</em>) – Слово для анализа</p></li>
+<li><p><strong>layout_data</strong> (<em>LayoutData</em>) – Данные раскладки</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Статистика по комбинациям</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="visualization">
+<h2>Visualization<a class="headerlink" href="#visualization" title="Ссылка на этот заголовок"></a></h2>
+<section id="charts">
+<h3>Charts<a class="headerlink" href="#charts" title="Ссылка на этот заголовок"></a></h3>
+<p>Класс для создания графиков.</p>
+<p><strong>Методы:</strong></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Charts.plot_finger_load">
+<span class="sig-prename descclassname"><span class="pre">Charts.</span></span><span class="sig-name descname"><span class="pre">plot_finger_load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layouts_stats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Нагрузка</span> <span class="pre">на</span> <span class="pre">пальцы'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Charts.plot_finger_load" title="Ссылка на это определение"></a></dt>
+<dd><p>Создает график нагрузки на пальцы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layouts_stats</strong> (<em>dict</em>) – Статистика по раскладкам</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Заголовок графика</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Объект matplotlib Figure</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>matplotlib.figure.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Charts.plot_total_penalty">
+<span class="sig-prename descclassname"><span class="pre">Charts.</span></span><span class="sig-name descname"><span class="pre">plot_total_penalty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layouts_stats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Общий</span> <span class="pre">штраф</span> <span class="pre">по</span> <span class="pre">раскладкам'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Charts.plot_total_penalty" title="Ссылка на это определение"></a></dt>
+<dd><p>Создает график общего штрафа.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layouts_stats</strong> (<em>dict</em>) – Статистика по раскладкам</p></li>
+<li><p><strong>title</strong> (<em>str</em>) – Заголовок графика</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Объект matplotlib Figure</p>
+</dd>
+</dl>
+<p>:rtype</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="visualization.html" class="btn btn-neutral float-left" title="Визуализация результатов" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

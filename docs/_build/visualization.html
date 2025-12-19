@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Визуализация результатов &mdash; документация Keyboard Layout Analyzer v2.0 </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=372fde1a"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="API Reference" href="api_reference.html" />
+    <link rel="prev" title="Формат JSON для пользовательских раскладок" href="json_format.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Keyboard Layout Analyzer v2.0
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Содержание:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Быстрый старт</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layouts.html">Поддерживаемые раскладки</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation_criteria.html">Критерии оценки раскладок</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Использование программы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="json_format.html">Формат JSON для пользовательских раскладок</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Визуализация результатов</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Типы графиков</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1. Статистика нагрузки на пальцы</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2. Штраф на пальцы по раскладкам</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3. Баланс между руками</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4. Распределение комбинаций по удобству</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">Примеры графиков</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">Настройка визуализации</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">Интерпретация графиков</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">Использование в отчетах</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Keyboard Layout Analyzer v2.0</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Визуализация результатов</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Визуализация результатов<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<p>Программа генерирует несколько типов графиков с использованием Matplotlib для наглядного представления результатов анализа.</p>
+<section id="id2">
+<h2>Типы графиков<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h2>
+<section id="id3">
+<h3>1. Статистика нагрузки на пальцы<a class="headerlink" href="#id3" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Назначение:</strong> Показать распределение нагрузки по пальцам</p></li>
+<li><p><strong>Тип:</strong> Столбчатая диаграмма (bar chart)</p></li>
+<li><p><strong>Ось X:</strong> Пальцы (мизинцы, безымянные, средние, указательные)</p></li>
+<li><p><strong>Ось Y:</strong> Количество нажатий (в тысячах или миллионах)</p></li>
+<li><p><strong>Особенность:</strong> Сравнение нескольких раскладок на одном графике</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>2. Штраф на пальцы по раскладкам<a class="headerlink" href="#id4" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Назначение:</strong> Сравнить общий штраф для разных раскладок</p></li>
+<li><p><strong>Тип:</strong> Столбчатая диаграмма с цветовым кодированием</p></li>
+<li><p><strong>Ось X:</strong> Раскладки</p></li>
+<li><p><strong>Ось Y:</strong> Общий штраф (чем меньше, тем лучше)</p></li>
+<li><p><strong>Цвет:</strong> Градация от зеленого (низкий штраф) к красному (высокий штраф)</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>3. Баланс между руками<a class="headerlink" href="#id5" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Назначение:</strong> Показать распределение нагрузки между руками</p></li>
+<li><p><strong>Тип:</strong> Горизонтальная столбчатая диаграмма</p></li>
+<li><p><strong>Ось Y:</strong> Раскладки</p></li>
+<li><p><strong>Ось X:</strong> Процент нагрузки (0-100%)</p></li>
+<li><p><strong>Область идеала:</strong> Выделенная зона 45-55%</p></li>
+<li><p><strong>Индикаторы:</strong> Стрелки для левой и правой руки</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>4. Распределение комбинаций по удобству<a class="headerlink" href="#id6" title="Ссылка на этот заголовок"></a></h3>
+<ul class="simple">
+<li><p><strong>Назначение:</strong> Показать соотношение типов комбинаций</p></li>
+<li><p><strong>Тип:</strong> Сгруппированная столбчатая диаграмма</p></li>
+<li><p><strong>Группы:</strong> Раскладки</p></li>
+<li><p><strong>Столбцы:</strong> Удобные, Частично удобные, Неудобные</p></li>
+<li><p><strong>Высота столбца:</strong> Процент от общего числа комбинаций</p></li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2>Примеры графиков<a class="headerlink" href="#id7" title="Ссылка на этот заголовок"></a></h2>
+<a class="reference internal image-reference" href="https://github.com/user-attachments/assets/6c90c7c7-289c-42f2-9fcc-bc4dd94aabea"><img alt="График 1 - Статистика нагрузки" src="https://github.com/user-attachments/assets/6c90c7c7-289c-42f2-9fcc-bc4dd94aabea" style="width: 100%;" />
+</a>
+<a class="reference internal image-reference" href="https://github.com/user-attachments/assets/117046c4-2abb-4b02-99b5-0c856c5fa7e7"><img alt="График 2 - Сравнение штрафов" src="https://github.com/user-attachments/assets/117046c4-2abb-4b02-99b5-0c856c5fa7e7" style="width: 100%;" />
+</a>
+</section>
+<section id="id8">
+<h2>Настройка визуализации<a class="headerlink" href="#id8" title="Ссылка на этот заголовок"></a></h2>
+<p>### Параметры отображения:
+- <strong>Размер фигуры:</strong> Адаптируется под количество раскладок
+- <strong>Цветовая схема:</strong> Используется набор цветов для лучшего восприятия
+- <strong>Подписи:</strong> Автоматическое форматирование больших чисел (K, M)
+- <strong>Легенда:</strong> Автоматическое размещение</p>
+<p>### Сохранение графиков:
+Графики автоматически сохраняются в файлы:
+- <cite>finger_load_comparison.png</cite> — нагрузка на пальцы
+- <cite>total_penalty_comparison.png</cite> — штрафы
+- <cite>hand_balance_comparison.png</cite> — баланс рук
+- <cite>combo_type_distribution.png</cite> — типы комбинаций</p>
+</section>
+<section id="id9">
+<h2>Интерпретация графиков<a class="headerlink" href="#id9" title="Ссылка на этот заголовок"></a></h2>
+<p>### На что обращать внимание:</p>
+<ol class="arabic simple">
+<li><p><strong>Нагрузка на пальцы:</strong>
+- Идеал: Равномерное распределение
+- Проблема: Перегрузка указательных пальцев
+- Решение: Перераспределение частых символов</p></li>
+<li><p><strong>Общий штраф:</strong>
+- Чем ниже столбец, тем лучше
+- Учитывайте абсолютные значения
+- Сравнивайте с другими раскладками</p></li>
+<li><p><strong>Баланс рук:</strong>
+- Идеал: Столбец в зоне 45-55%
+- Красная зона: Сильный перекос (&gt;70% или &lt;30%)
+- Желтая зона: Умеренный перекос</p></li>
+<li><p><strong>Типы комбинаций:</strong>
+- Цель: Максимум синих столбцов (удобные)
+- Минимизация красных столбцов (неудобные)
+- Желтые столбцы (частично удобные) — нейтральны</p></li>
+</ol>
+</section>
+<section id="id10">
+<h2>Использование в отчетах<a class="headerlink" href="#id10" title="Ссылка на этот заголовок"></a></h2>
+<p>Графики можно использовать для:
+- <strong>Сравнительного анализа</strong> разных раскладок
+- <strong>Обоснования выбора</strong> конкретной раскладки
+- <strong>Научных исследований</strong> эргономики
+- <strong>Демонстрации</strong> преимуществ альтернативных раскладок</p>
+<p>Советы по анализу:
+1. <strong>Смотрите на общую картину:</strong> Не зацикливайтесь на одном графике
+2. <strong>Учитывайте веса критериев:</strong> Удобство комбинаций важнее баланса рук
+3. <strong>Проверяйте консистентность:</strong> Результаты на разных текстах должны быть похожи
+4. <strong>Учитывайте субъективные факторы:</strong> Графики не учитывают привычки пользователя</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="json_format.html" class="btn btn-neutral float-left" title="Формат JSON для пользовательских раскладок" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2024, Your Name or Organization. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
